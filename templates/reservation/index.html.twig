@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chez Dionysos - Réservation{% endblock %}
+
+{% block body %}
+
+
+    <div class="global-container">
+
+        {% include 'navBar.html.twig' %}
+
+        <div class="article-container">
+
+            {# Title #}
+            <section class="first-section">
+                <h1>
+                    Réservation
+                </h1>
+
+            </section>
+
+
+            {# Réserver #}
+            <section class="second-section">
+                <form method="post" onsubmit="reserverPartUn(self)" action="/reservation">
+                    <div class="selection-reservation">
+                        <label for="couverts" class="item-label">Nombres de couverts</label>
+                        <div class="reservation-wrapper">
+                            {% for i in 1..8 %}
+                                <input type="radio" name="couverts" class="couverts" id="{{ i }}">
+                                <label for="{{ i }}">{{ i }}</label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="selection-reservation">
+                        <label for="couverts" class="item-label">Date</label>
+                        <div class="reservation-wrapper">
+                            <input type="date" min="{{ "now"|date("Y-m-d") }}">
+                        </div>
+                    </div>
+
+                    <div class="selection-reservation">
+                        <label for="salle" class="item-label">Salle</label>
+                        <div class="reservation-wrapper">
+                            <input type="radio" name="salle" class="salle" id="interieur">
+                            <label for="interieur">Intérieur</label>
+                            <input type="radio" name="salle" class="salle" id="terrasse">
+                            <label for="terrasse">Terrasse BACHEE ET CHAUFFE</label>
+                        </div>
+                    </div>
+
+                    <div class="selection-reservation">
+                        <label for="Horraire" class="item-label">Horraire</label>
+                        <div class="reservation-wrapper">
+                            <select id="custom-dropdown">
+                                <optgroup label="Déjeuner&nbsp">
+                                    {% for i in 12..13 %}
+                                        {% for j in ["00", 15, 30, 45] %}
+                                                <option>• {{ i }}:{{ j }}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </optgroup>
+
+                                <optgroup label="Dîner&nbsp">
+                                    {% for i in 19..21 %}
+                                        {% for j in ["00", 15, 30, 45] %}
+                                            <option>• {{ i }}:{{ j }}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="token" value="{{ csrf_token('make-reservation') }}">
+                    <div class="submit-wrapper">
+                        <input type="submit" name="reserver" value="Réserver" class="submitButton">
+                    </div>
+                </form>
+            </section>
+
+            <script>
+                function reserverPartUn(item){
+                    alert(item);
+                }
+            </script>
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chez Dionysos - Menu{% endblock %}
+
+{% block body %}
+
+    <div class="global-container">
+
+        {% include 'navBar.html.twig' %}
+
+        <div class="article-container">
+
+            {#<div class="gradient"></div>
+        <div class="main-article">
+        <img src="{{ asset('bd6c3591ce706faa7b68056b557df33d.jpg') }}" class="image-background">
+        </div>#}
+
+            {# Title #}
+            <section class="first-section">
+                <h1>
+                    Menu
+                </h1>
+
+            </section>
+
+
+            {# First Part #}
+            <section class="second-section">
+                {% for plat in plats %}
+                    <li>
+                        {{ plat.nom }}, {{ plat.prix }}, {{ plat.categorie }}
+                    </li>
+                {% endfor %}
+            </section>
+
+
+            {# Second Part #}
+            <section class="first-section">
+
+            </section>
+        </div>
+
+        {% include 'footer.html.twig' %}
+
+    </div>
+{% endblock %}
