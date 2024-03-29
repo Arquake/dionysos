@@ -16,28 +16,22 @@
         </div>#}
 
         {# Title #}
-        <section class="first-section">
-            <h1>
-                Bienvenue Chez Dionysos
-            </h1>
-
-        </section>
+        {% include 'title.html.twig' with {title:'Bienvenue chez Dionysos'} %}
 
 
         {# Presentation #}
-        <section class="second-section">
-            <article class="second-section-first-article">
-                <img src="{{ asset('frontShop.jpg') }}" class="img-first-section">
-                <div class="second-section-text">
+        <section class="bg-winter-hazel-300 py-12">
+            <article class="second-section-first-article flex items-center justify-center flex-wrap">
+                <img src="{{ asset('frontShop.jpg') }}" class="object-contain h-auto lg:ml-16 max-w-64 sm:max-w-sm md:max-w-lg ">
+                <div class="sm:text-xl text-sm font-medium lg:w-1/2 sm:mt-0 mt-4 sm:mr-16 sm:mx-0 mx-3 lg:ml-8 ">
 
+                    Le label <a href="https://www.economie.gouv.fr/entreprises/fait-maison#" class="text-red-800 hover:decoration-2 hover:underline hover:underline-offset-7">"Fait Maison"</a> est sorti et nous en sommes très heureux Chez Dionysos. <br><br>
 
-                    Le label <a href="https://www.economie.gouv.fr/entreprises/fait-maison#" class="second-section-link">"Fait Maison"</a> est sorti et nous en sommes très heureux Chez Dionysos. <br><br>
-
-                    N'hésitez à vous <a href="https://www.economie.gouv.fr/files/files/PDF/20140715_DP_Fait_Maison.pdf" class="second-section-link">informer</a> sur cette nouvelle disposition. <br><br>
+                    N'hésitez à vous <a href="https://www.economie.gouv.fr/files/files/PDF/20140715_DP_Fait_Maison.pdf" class="text-red-800 hover:decoration-2 hover:underline hover:underline-offset-7">informer</a> sur cette nouvelle disposition. <br><br>
 
                     En ce qui nous concerne, toutes nos entrées, tous nos plats et tous nos desserts sont "Fait Maison"
-                    selon le décret du <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000029225331" class="second-section-link">Décret n°2014-797 du 11 juillet 2014</a>
-                    modifié par le <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030555919" class="second-section-link">Décret n°2015-505 du 6 mai 2015</a>. <br><br>
+                    selon le décret du <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000029225331" class="text-red-800 hover:decoration-2 hover:underline hover:underline-offset-7">Décret n°2014-797 du 11 juillet 2014</a>
+                    modifié par le <a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000030555919" class="text-red-800 hover:decoration-2 hover:underline hover:underline-offset-7">Décret n°2015-505 du 6 mai 2015</a>. <br><br>
                     Alors venez les gouter dans notre restaurant 1 rue du Tabour 45000 ORLEANS.<br>
                     A bientôt!
 
@@ -47,20 +41,21 @@
 
 
         {# Carousel + Map#}
-        <section class="third-section">
-            <div class="third-section-text">
+        <section class="flex flex-wrap py-12 bg-neutral-900 items-center justify-center md:gap-28 gap-12">
+            <div class="md:text-xl text-sm md:px-0 px-8 text-winter-hazel-50">
                 Retrouvez nous au : 1 rue du Tabour 45000 ORLEANS ! <br><br>
                 Du Mardi au Samedi <br><br>
                 De 12h-14h et de 19h-22h <br> <br>
                 Pour les réservations de plus de 8 personnes <br><br>
                 Contactez nous : 02 38 53 71 12
             </div>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d344.15478294277403!2d1.9038540961792454!3d47.90042202606662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e4e4d6b059bae9%3A0x1af1b852a02da859!2sChez%20Dionysos!5e0!3m2!1sfr!2sfr!4v1711573505212!5m2!1sfr!2sfr" width="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="section-map"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d344.15478294277403!2d1.9038540961792454!3d47.90042202606662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e4e4d6b059bae9%3A0x1af1b852a02da859!2sChez%20Dionysos!5e0!3m2!1sfr!2sfr!4v1711573505212!5m2!1sfr!2sfr" width="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
+            class="object-contain h-96 max-w-64 sm:max-w-sm md:max-w-lg"></iframe>
         </section>
 
 
         {# Avis #}
-        <section class="fourth-section">
+        <section class="bg-winter-hazel-300 py-12">
 
         </section>
 
