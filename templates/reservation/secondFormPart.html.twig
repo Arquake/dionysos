@@ -1,0 +1,90 @@
+{# Résumé #}
+<div class="w-full bg-neutral-200 border-2 border-neutral-300 py-6 rounded-xl flex flex-row">
+    {# couverts #}
+    <div class="flex gap-2 basis-1/4 justify-center">
+        <img src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="h-6">
+        <span id="recap-couverts"></span>
+    </div>
+
+    {# date #}
+    <div class="flex gap-2 basis-1/4 justify-center">
+        <img src="{{ asset('calendar-alt-svgrepo-com.svg') }}" class="h-6">
+        <span id="recap-date"></span>
+    </div>
+
+    {# heure #}
+    <div class="flex gap-2 basis-1/4 justify-center">
+        <img src="{{ asset('clock-svgrepo-com.svg') }}" class="h-6">
+        <span id="recap-heure"></span>
+    </div>
+
+    {# lieu #}
+    <div class="flex gap-2 basis-1/4 justify-center">
+        <img src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="h-6">
+        <span id="recap-lieu">Interrieur</span>
+    </div>
+
+</div>
+
+
+
+<div class="flex flex-wrap pb-8">
+    <label for="salle" class="text-left text-3xl w-full text-neutral-900 mt-4">Civilité</label>
+    <div class="flex flew-row gap-4 pl-4 w-full py-3">
+        <div class="w-1/2">
+            <input type="radio" name="civilite" id="Madame" checked value="Madame" checked>
+            <label for="Madame" class="duration-300 rounded-lg ml-2 md:text-base text-xs text-left">Madame</label>
+        </div>
+        <div class="w-1/2">
+            <input type="radio" name="civilite" id="Monsieur" checked value="Monsieur">
+            <label for="Monsieur" class="duration-300 rounded-lg ml-2 md:text-base text-xs text-left">Monsieur</label>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-wrap pb-8">
+    <div class="w-1/2">
+        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Prénom</label>
+        <div class="pl-4 pt-3">
+            <input id="" type="text" name="prenom" placeholder="prenom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+        </div>
+    </div>
+    <div class="w-1/2 pl-5">
+        <label for="nom" class="text-left text-3xl w-full text-neutral-900">Nom</label>
+        <div class="pl-4 pt-3">
+            <input id="" type="text" name="nom" placeholder="nom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+        </div>
+    </div>
+</div>
+
+<div class="pb-8">
+    <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Numéro</label>
+    <div class="w-2/3 flex flex-wrap">
+        <div class="pl-4 pt-3 w-1/3">
+            <input id="" type="text" name="indicatif" placeholder="33+ ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+        </div>
+        <div class="pt-3 w-1/2">
+            <input id="" type="text" name="numero" placeholder="6 12 34 56 78 ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+        </div>
+    </div>
+</div>
+
+<div class="pb-8">
+    <div class="w-3/4">
+        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Email</label>
+        <div class="pl-4 pt-3">
+            <input id="" type="text" name="email" placeholder="votre@email.fr ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+        </div>
+    </div>
+</div>
+
+<div class="pb-8">
+    <div class="w-3/4">
+        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Commentaires
+        <span class="text-base">&nbsp allergies et habitudes alimentaires (facultatif)</span></label>
+        <div class="pl-4 pt-3">
+            <textarea class="rounded resize-none w-full" rows="4">
+            </textarea>
+        </div>
+    </div>
+</div>
