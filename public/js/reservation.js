@@ -20,13 +20,14 @@ lieu = document.getElementById('recap-lieu')
 const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 const month = ['Jan','Fev','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Dec',]
 
-today = (new Date).getFullYear()+"-"+(((new Date).getMonth()+1).toString().padStart(2, '0'))+"-"+((new Date).getDate())
+today = (new Date).getFullYear()+"-"+(((new Date).getMonth()+1).toString())+"-"+((new Date).getDate())
 
 function reserverPartUn(){
     data = new FormData(reservationForm)
     event.preventDefault();
+
     if(
-        (today == data.get('date')) &&
+        ((new Date(today).getTime()) == (new Date(data.get('date'))).setHours(0)) &&
         (((new Date).getHours()-1 >= parseInt(data.get('heure').substring(2, 4) )) ||
         ((new Date).getMinutes() >= parseInt(data.get('heure').substring(5, 7)) && (new Date).getHours()-1 >= parseInt(data.get('heure').substring(2, 4) )))
     ){
@@ -72,3 +73,11 @@ function backReservation() {
         document.getElementById("date-picker").value = ""
     }
 })
+
+if ((new Date((document.getElementById("date-picker")).value)).getDay()==1 || (new Date((document.getElementById("date-picker")).value)).getDay==0) {
+    document.getElementById("date-picker").value = ""
+}
+
+function ConfirmerReservation() {
+    console.log(new FormData(document.getElementById('reservationForm')))
+}

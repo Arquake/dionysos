@@ -1,27 +1,27 @@
 {# Résumé #}
-<div class="w-full bg-neutral-200 border-2 border-neutral-300 py-6 rounded-xl flex flex-row">
+<div class="w-full bg-neutral-200 border-2 border-neutral-300 md:py-6 p-4 rounded-xl flex flex-row">
     {# couverts #}
-    <div class="flex gap-2 basis-1/4 justify-center">
-        <img src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="h-6">
-        <span id="recap-couverts"></span>
+    <div class="flex gap-2 basis-1/4 justify-center items-center">
+        <img src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="md:h-6 h-5">
+        <span id="recap-couverts" class="md:text-base text-xs"></span>
     </div>
 
     {# date #}
-    <div class="flex gap-2 basis-1/4 justify-center">
-        <img src="{{ asset('calendar-alt-svgrepo-com.svg') }}" class="h-6">
-        <span id="recap-date"></span>
+    <div class="flex gap-2 basis-1/4 justify-center items-center">
+        <img src="{{ asset('calendar-alt-svgrepo-com.svg') }}" class="md:h-6 h-5">
+        <span id="recap-date" class="md:text-base text-xs"></span>
     </div>
 
     {# heure #}
-    <div class="flex gap-2 basis-1/4 justify-center">
-        <img src="{{ asset('clock-svgrepo-com.svg') }}" class="h-6">
-        <span id="recap-heure"></span>
+    <div class="flex gap-2 basis-1/4 justify-center items-center">
+        <img src="{{ asset('clock-svgrepo-com.svg') }}" class="md:h-6 h-5">
+        <span id="recap-heure" class="md:text-base text-xs"></span>
     </div>
 
     {# lieu #}
-    <div class="flex gap-2 basis-1/4 justify-center">
-        <img src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="h-6">
-        <span id="recap-lieu">Interrieur</span>
+    <div class="flex gap-2 basis-1/4 justify-center items-center">
+        <img src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="md:h-6 h-5">
+        <span id="recap-lieu" class="md:text-base text-xs">Interrieur</span>
     </div>
 
 </div>
@@ -29,10 +29,10 @@
 
 
 <div class="flex flex-wrap pb-8">
-    <label for="salle" class="text-left text-3xl w-full text-neutral-900 mt-4">Civilité</label>
+    <label for="salle" class="text-left md:text-3xl text-2xl w-full text-neutral-900 mt-4">Civilité</label>
     <div class="flex flew-row gap-4 pl-4 w-full py-3">
         <div class="w-1/2">
-            <input type="radio" name="civilite" id="Madame" checked value="Madame" checked>
+            <input type="radio" name="civilite" id="Madame" checked value="Madame" checked required>
             <label for="Madame" class="duration-300 rounded-lg ml-2 md:text-base text-xs text-left">Madame</label>
         </div>
         <div class="w-1/2">
@@ -44,47 +44,51 @@
 
 <div class="flex flex-wrap pb-8">
     <div class="w-1/2">
-        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Prénom</label>
+        <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Prénom</label>
         <div class="pl-4 pt-3">
-            <input id="" type="text" name="prenom" placeholder="prenom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+            <input id="" type="text" maxlength="48" name="prenom" placeholder="prenom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" min="{{ "now"|date("Y-m-d") }}" required>
         </div>
     </div>
     <div class="w-1/2 pl-5">
-        <label for="nom" class="text-left text-3xl w-full text-neutral-900">Nom</label>
+        <label for="nom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Nom</label>
         <div class="pl-4 pt-3">
-            <input id="" type="text" name="nom" placeholder="nom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+            <input id="" type="text" maxlength="48" name="nom" placeholder="nom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" min="{{ "now"|date("Y-m-d") }}" required>
         </div>
     </div>
 </div>
 
 <div class="pb-8">
-    <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Numéro</label>
+    <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Numéro</label>
     <div class="w-2/3 flex flex-wrap">
         <div class="pl-4 pt-3 w-1/3">
-            <input id="" type="text" name="indicatif" placeholder="33+ ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+            <input id="" type="number" min="1" max="999" maxlength="3" name="indicatif" placeholder="33+ ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none md:text-base text-xs" min="{{ "now"|date("Y-m-d") }}">
         </div>
         <div class="pt-3 w-1/2">
-            <input id="" type="text" name="numero" placeholder="6 12 34 56 78 ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+            <input id="" type="number" min="100000000" max="999999999" maxlength="9" name="numero" placeholder="6 12 34 56 78 ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit md:w-2/3 w-full border-neutral-900 cursor-pointer [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none md:text-base text-xs" min="{{ "now"|date("Y-m-d") }}" required>
         </div>
     </div>
 </div>
 
 <div class="pb-8">
     <div class="w-3/4">
-        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Email</label>
+        <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Email</label>
         <div class="pl-4 pt-3">
-            <input id="" type="text" name="email" placeholder="votre@email.fr ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+            <input id="" type="email" name="email" placeholder="votre@email.fr ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" min="{{ "now"|date("Y-m-d") }}" required>
         </div>
     </div>
 </div>
 
 <div class="pb-8">
     <div class="w-3/4">
-        <label for="prenom" class="text-left text-3xl w-full text-neutral-900">Commentaires
-        <span class="text-base">&nbsp allergies et habitudes alimentaires (facultatif)</span></label>
+        <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Commentaires
+        <span class="md:text-base text-xs font-medium">&nbsp allergies et habitudes alimentaires (facultatif)</span></label>
         <div class="pl-4 pt-3">
-            <textarea class="rounded resize-none w-full" rows="4">
-            </textarea>
+            <textarea class="rounded resize-none w-full md:text-base text-xs" name="commentaires" rows="4" maxlength="300"></textarea>
         </div>
     </div>
+</div>
+
+<div class="md:text-base text-xs font-medium mb-4">
+    <input type="checkbox" id="cgu" name="cgu" class="rounded" required/>
+    <label for="horns" class="ml-4">J'accepte les conditions générales d'utilisation du service.<span class="text-orange-600">*</span></label>
 </div>

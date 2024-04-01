@@ -1,37 +1,37 @@
 <div class="flex flex-wrap mt-8 pb-8">
     <label for="" class="item-label text-left text-3xl text-neutral-900">Nombres de couverts</label>
-    <div class="flex flex-row gap-4 pl-4 w-full py-3"> 
-        <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked>
-        <label for="couvert-1" class="select-none duration-300 md:p-5 p-0 w-1/12 rounded-lg md:text-base text-xs text-center">1</label>
+    <div class="flex flex-row lg:gap-4 gap-2 pl-4 w-full py-3"> 
+        <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked required>
+        <label for="couvert-1" class="select-none duration-300 md:p-5 p-2 w-1/12 rounded-lg md:text-base text-xs text-center">1</label>
         
         {% for i in 2..8 %}
             <input type="radio" name="couverts" class="couverts hidden" id="couvert-{{ i }}" value="{{i}}">
-            <label for="couvert-{{ i }}" class="select-none duration-300 md:p-5 p-0 w-1/12 rounded-lg md:text-base text-xs text-center">{{ i }}</label>
+            <label for="couvert-{{ i }}" class="select-none duration-300 md:p-5 p-2 w-1/12 rounded-lg md:text-base text-xs text-center">{{ i }}</label>
         {% endfor %}
     </div>
 </div>
 
 <div class="flex flex-wrap pb-8">
     <label for="date" class="text-left text-3xl w-full text-neutral-900">Date</label>
-    <div class="pl-4 w-1/3 pt-3">
-        <input id="date-picker" type="date" name="date" value="{{ "now"|date("Y-m-d") }}" class="border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer" min="{{ "now"|date("Y-m-d") }}">
+    <div class="pl-4 md:w-1/3 w-5/12 pt-3">
+        <input required id="date-picker" type="date" name="date" value="{{ "now"|date("Y-m-d") }}" class="border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer lg:text-base text-xs" min="{{ "now"|date("Y-m-d") }}">
     </div>
 </div>
 
 <div class="flex flex-wrap pb-8">
     <label for="salle" class="text-left text-3xl w-full text-neutral-900">Salle</label>
     <div class=" flex flex-row gap-4 pl-4 w-full py-3">
-        <input type="radio" name="salle" class="salle hidden" id="interieur" checked value="intérieur">
-        <label for="interieur" class="duration-300 md:p-5 p-0 w-1/2 rounded-lg md:text-base text-xs text-center">Intérieur</label>
+        <input type="radio" name="salle" class="salle hidden" id="interieur" checked required value="intérieur">
+        <label for="interieur" class="duration-300 p-4 rounded-lg lg:text-base text-xs text-center">Intérieur</label>
         <input type="radio" name="salle" class="salle hidden" id="terrasse" value="Terrasse">
-        <label for="terrasse" class="duration-300 md:p-5 p-0 w-1/2 rounded-lg md:text-base text-xs text-center">Terrasse BACHEE ET CHAUFFE</label>
+        <label for="terrasse" class="duration-300  p-4 rounded-lg lg:text-base text-xs text-center">Terrasse COUVERTE ET CHAUFFEE</label>
     </div>
 </div>
 
 <div class="flex flex-wrap pb-8">
     <label for="Horraire" class="text-left text-3xl w-full text-neutral-900">Horraire</label>
     <div class="pl-4 w-1/3 pt-3">
-        <select name="heure" id="custom-dropdown" class=" border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer">
+        <select required name="heure" id="custom-dropdown" class="lg:text-base text-xs border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer">
             <optgroup label="Déjeuner&nbsp">
                 {% for i in 12..13 %}
                     {% for j in ["00", 15, 30, 45] %}

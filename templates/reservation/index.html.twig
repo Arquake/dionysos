@@ -17,7 +17,7 @@
 
             {# Réserver #}
             <section class="second-section bg-winter-hazel-200">
-                <form class="w-2/3 p-8 m-auto" method="post" action="/reservation" id="reservationForm">
+                <form class="md:w-2/3 w-full p-8 m-auto" method="post" action="/reservation" id="reservationForm">
                     <div id="form-first-part">
                         {% include 'reservation/firstFormPart.html.twig'%}
                     </div>
@@ -29,16 +29,16 @@
                     <input type="hidden" name="token" value="{{ csrf_token('make-reservation') }}">
 
                     <div class="" id="reserver-button">
-                        <input onClick="reserverPartUn()" type="submit" name="reserver" value="Réserver" class="md:p-5 p-0 w-1/3 rounded-lg md:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
+                        <input onClick="reserverPartUn()" type="submit" name="reserver" value="Continuer la réservation" class="md:p-5 p-2 md:w-2/5 w-1/2 rounded-lg lg:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
                     </div>
 
-                    <div class="flex flex-wrap gap-8">
+                    <div class="flex flex-wrap md:gap-8 gap-4">
                         <div class="w-1/3" id="back-reservation-button">
-                            <input onClick="backReservation()" type="button" name="back" value="back" class="md:p-5 p-0 w-full rounded-lg md:text-lg text-xs text-center bg-neutral-600 text-neutral-50">
+                            <input onClick="backReservation()" type="button" name="back" value="back" class="md:p-5 p-2 md:w-full w-1/2 rounded-lg lg:text-lg text-xs text-center bg-neutral-600 text-neutral-50">
                         </div>
 
-                        <div class="w-1/3" id="confirmer-reservation-button">
-                            <input onClick="ConfirmerReservation()" type="button" name="confirmer" value="Confirmer Réservation" class="md:p-5 p-0 w-full rounded-lg md:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
+                        <div class="md:1/3 w-2/5" id="confirmer-reservation-button">
+                            <input onClick="ConfirmerReservation()" type="submit" name="confirmer" value="Confirmer Réservation" class="md:p-5 p-2 md:px-5 px-0 md:w-full w-full rounded-lg lg:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
                         </div>
                     </div>
 
