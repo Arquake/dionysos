@@ -12,7 +12,6 @@ class CGUController extends AbstractController
     public function index(): Response
     {
         return $this->render('cgu/index.html.twig', [
-            'controller_name' => 'CGUController',
         ]);
     }
 }

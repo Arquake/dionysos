@@ -1,20 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Dionysos - Login{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="bg-blue-100 w-full flex justify-center items-center h-screen">
+    <form method="post" action="/panel-gestion" class="bg-neutral-100 rounded-lg sm:p-8 p-4 w-1/2 shadow-xl">
+        <div class="flex flex-wrap items-center gap-4">
+            <div class="text-right w-2/5 text-neutral-800 lg:text-xl sm:text-base text-sm spacing tracking-wide">
+                Login :
+            </div>
+            <input required placeholder="Login ..." type="text" class="h-1/2 border-0 border-b-2 bg-inherit w-2/5 border-neutral-700 text-neutral-800 cursor-pointer lg:text-base text-xs" />
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Admin/Desktop/projects/dionysos/src/Controller/LoginController.php</code></li>
-        <li>Your template at <code>C:/Users/Admin/Desktop/projects/dionysos/templates/login/index.html.twig</code></li>
-    </ul>
+        <div class="flex flex-wrap items-center gap-4 mt-8">
+            <div class="text-right w-2/5 text-neutral-800 lg:text-xl sm:text-base text-sm spacing tracking-wide">
+                Mot De Passe :
+            </div>
+            <input required placeholder="mot de passe ..." type="password" class="h-1/2 border-0 border-b-2 bg-inherit w-2/5 border-neutral-700 text-neutral-800 cursor-pointer lg:text-base text-xs" />
+        </div>
+
+        {% if error == true %}
+            <div class="bg-red-200 border-2 border-red-400 lg:mt-8 mt-4 p-4 rounded-2xl text-red-700 font-normal antialiased lg:text-base text-xs">
+                Le login ou le mot de passe incorrect
+            </div>
+        {% endif %}
+
+        <div class="flex flex-wrap items-center gap-4 lg:mt-8 sm:mt-4">
+            <div class="md:w-1/2 sm:w-1/3">&nbsp</div>
+            <input type="submit" name="connexion" value="Connexion" class="mt-8 p-4 bg-blue-500 rounded-2xl md:w-1/3 sm:w-1/2 w-full text-neutral-100 lg:text-xl sm:text-base text-sm tracking-wide shadow-lg" />
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -30,7 +30,6 @@ class MenuController extends AbstractController
         $em->flush();*/
 
         return $this->render('menu/index.html.twig', [
-            'controller_name' => 'MenuController',
             'plats' => $plats
         ]);
     }

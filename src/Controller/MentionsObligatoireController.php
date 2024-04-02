@@ -12,7 +12,6 @@ class MentionsObligatoireController extends AbstractController
     public function index(): Response
     {
         return $this->render('mentions_obligatoire/index.html.twig', [
-            'controller_name' => 'MentionsObligatoireController',
         ]);
     }
 }

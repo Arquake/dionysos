@@ -20,7 +20,6 @@ class ReservationController extends AbstractController
 
 
         return $this->render('reservation/index.html.twig', [
-            'controller_name' => 'ReservationController',
         ]);
     }
 }
