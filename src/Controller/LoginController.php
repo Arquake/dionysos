@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
+    #[Route('/loger', name: 'app_loger')]
     public function index(Request $request): Response
     {
         $error=$request->query->get('error');

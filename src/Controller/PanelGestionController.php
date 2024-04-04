@@ -13,16 +13,7 @@ class PanelGestionController extends AbstractController
     public function index(Request $request): Response
     {
 
-        $session = $request->getSession();
-
-        $poste = $session->get('poste');
-
-        $validConnexion = false;
-
-        if(($request->isMethod('GET') && $poste == null) || ($request->isMethod('POST') && !$validConnexion)){
-            return $this->redirectToRoute('app_login',['error' => true]);
-        }
-        
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         return $this->render('panel_gestion/index.html.twig', [
         ]);
