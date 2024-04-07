@@ -5,6 +5,11 @@
 {% block body %}
 
 <div class="">
-    Connected !
+    {% if is_granted('ROLE_ADMIN') %}
+        test
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SERVEUR') %}
+        test2
+    {% endif %}
 </div>
 {% endblock %}

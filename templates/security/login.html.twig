@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Dyonisos - login{% endblock %}
 
 {% block body %}
 <div class="bg-blue-100 w-full flex justify-center items-center h-screen">
@@ -25,9 +25,10 @@
             </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <div class="checkbox mb-3">
+            <div class="checkbox mb-3 flex flex-wrap items-center gap-4 mt-8">
+                <div class="w-2/5">&nbsp</div>
                 <label>
-                    <input class="rounded" type="checkbox" name="_remember_me"><span>se souvenir de moi</span>
+                    <input class="rounded" type="checkbox" name="_remember_me"><span class="text-right w-3/5 text-neutral-800 sm:text-base text-sm spacing tracking-wide ml-2 font-normal">se souvenir de moi</span>
                 </label>
             </div>
 
