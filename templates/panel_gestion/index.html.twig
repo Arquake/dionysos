@@ -5,15 +5,17 @@
 {% block body %}
 
 <div>
-    <nav id="nav-bar" class="flex flex-row bg-gray-50 py-6 justify-around list-none">
-        <li class="text-blue-600 text-lg text-center drop-shadow-md shadow-blue-600">Réservations</li>
-        <li class="text-blue-600 text-lg text-center">1</li>
-        <li class="text-blue-600 text-lg text-center">2</li>
-        <li class="text-blue-600 text-lg text-center">3</li>
+    <nav id="nav-bar" class="flex flex-row bg-gray-50 py-6 justify-around list-none text-lg">
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-gestion">Gestion</li>
+        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-finance">Finance</li>
+        {% endif %}
+        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-reservation">Réservations</li>
+        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-carte">Carte</li>
     </nav>
     
-    <div id="menu" class="px-8 bg-gray-50">
-        <div class="mx-16 border-gray-200 border-b-4"></div>
+    <div id="menu" class="py-8 px-16 bg-gray-50">
+        <div class="mx-16"></div>
         {% if is_granted('ROLE_ADMIN') %}
             test
         {% endif %}
