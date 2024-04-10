@@ -14,6 +14,10 @@ class PanelGestionController extends AbstractController
     #[Route('/panel-gestion', name: 'app_panel_gestion')]
     public function index(Request $request): Response
     {
-        return $this->render('panel_gestion/index.html.twig');
+        return $this->render('panel_gestion/index.html.twig', [
+            'categories' => ['boissons','vins rouges', "vins rosés"],
+            'ouvert' => ['2023-01-12','2023-04-14','2023-04-14','2023-04-14','2023-04-14','2023-04-14'],
+            'fermer' => ['2023-01-06','2023-04-04']
+        ]);
     }
 }

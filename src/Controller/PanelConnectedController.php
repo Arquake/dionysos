@@ -24,6 +24,6 @@ class PanelConnectedController extends AbstractController
         if ($this->isGranted("ROLE_ADMIN")) {
             return new RedirectResponse($this->urlGenerator->generate('app_panel_gestion'));
         }
-        return $this->render('panel_gestion/index.html.twig');
+        return new RedirectResponse($this->urlGenerator->generate('app_panel_reservation'));
     }
 }

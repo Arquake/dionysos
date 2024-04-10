@@ -1,0 +1,8 @@
+<nav id="nav-bar" class="flex flex-row bg-gray-50 py-6 justify-around list-none text-lg">
+    {% if is_granted('ROLE_ADMIN') %}
+    <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2"><a href="/panel-gestion">Gestion</a></li>
+    <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2"><a href="/panel-finance">Finance</a></li>
+    {% endif %}
+    <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2"><a href="/panel-reservation">Réservations</a></li>
+    <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2"><a href="/panel-carte">Carte</a></li>
+</nav>

@@ -17,6 +17,9 @@ date = document.getElementById('recap-date')
 heure = document.getElementById('recap-heure')
 lieu = document.getElementById('recap-lieu')
 
+dateOuvert=[]
+dateFermer = []
+
 const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 const month = ['Jan','Fev','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Dec',]
 
@@ -66,9 +69,13 @@ function backReservation() {
 
 
 (document.getElementById("date-picker")).addEventListener("blur", ()=> {
-    chosenDate = document.getElementById("date-picker").value
+    formDate = document.getElementById("date-picker").value
     chosenDate = new Date(chosenDate)
-    if (chosenDate.getDay() == 1 || chosenDate.getDay() == 0) {
+    if (dateFermer.includes(formDate)){
+        alert('Nous sommes fermer exceptionnellement le '+formDate)
+        document.getElementById("date-picker").value = ""
+    }
+    else if (!dateOuvert.includes(formDate) && (chosenDate.getDay() == 1 || chosenDate.getDay() == 0)) {
         alert('L\'établissement est fermé les Lundis et Samedis')
         document.getElementById("date-picker").value = ""
     }

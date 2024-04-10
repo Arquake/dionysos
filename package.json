@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "flowbite": "^2.3.0"
+    "flatpickr": "^4.6.13",
+    "flowbite": "^2.3.0",
+    "flowbite-datepicker": "^1.2.6"
   }
 }

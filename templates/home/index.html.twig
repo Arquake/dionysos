@@ -20,7 +20,7 @@
 
 
         {# Presentation #}
-        <section class="bg-winter-hazel-300 py-12">
+        <section class="bg-winter-hazel-100 py-12">
             <article class="second-section-first-article flex items-center justify-center flex-wrap">
                 <img src="{{ asset('frontShop.jpg') }}" class="object-contain h-auto lg:ml-16 max-w-64 sm:max-w-sm md:max-w-lg ">
                 <div class="sm:text-xl text-sm font-medium lg:w-1/2 sm:mt-0 mt-4 sm:mr-16 sm:mx-0 mx-3 lg:ml-8 ">
@@ -40,7 +40,13 @@
         </section>
 
 
-        {# Carousel + Map#}
+        {# Carousel #}
+        <section class="bg-winter-hazel-300 py-12">
+            {% include 'home/carousel.html.twig' %}
+        </section>
+
+
+        {# Map#}
         <section class="flex flex-wrap py-12 bg-neutral-900 items-center justify-center md:gap-28 gap-12">
             <div class="md:text-xl text-sm md:px-0 px-8 text-winter-hazel-50">
                 Retrouvez nous au : 1 rue du Tabour 45000 ORLEANS ! <br><br>
@@ -51,12 +57,6 @@
             </div>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d344.15478294277403!2d1.9038540961792454!3d47.90042202606662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e4e4d6b059bae9%3A0x1af1b852a02da859!2sChez%20Dionysos!5e0!3m2!1sfr!2sfr!4v1711573505212!5m2!1sfr!2sfr" width="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" 
             class="object-contain md:h-96 h-64 max-w-64 sm:max-w-sm md:max-w-lg"></iframe>
-        </section>
-
-
-        {# Avis #}
-        <section class="bg-winter-hazel-300 py-12">
-            {% include 'home/carousel.html.twig' %}
         </section>
 
         {% include 'footer.html.twig' %}

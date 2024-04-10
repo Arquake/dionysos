@@ -5,24 +5,98 @@
 {% block body %}
 
 <div>
-    <nav id="nav-bar" class="flex flex-row bg-gray-50 py-6 justify-around list-none text-lg">
-        {% if is_granted('ROLE_ADMIN') %}
-        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-gestion">Gestion</li>
-        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-finance">Finance</li>
-        {% endif %}
-        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-reservation">Réservations</li>
-        <li class="text-blue-600 text-center drop-shadow-md shadow-blue-600 hover:underline hover:underline-offset-2 hover:decoration-2" href="/panel-carte">Carte</li>
-    </nav>
+
+    {% include 'staffNavBar.html.twig' %}
     
-    <div id="menu" class="py-8 px-16 bg-gray-50">
-        <div class="mx-16"></div>
-        {% if is_granted('ROLE_ADMIN') %}
-            test
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SERVEUR') %}
-            test2
-        {% endif %}
+    <div id="menu" class="py-8 px-16 bg-blue-50 grid md:grid-cols-5 grid-rows-5">
+        <form class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 md:row-span-2 row-span-1 col-span-5 h-min">
+            <legend class="lg:text-lg sm:text-base text-sm tracking-wide">Ajouter un Article</legend>
+            
+            {# Nom de l'article #}
+            <div class="flex flex-wrap md:my-4 my-0">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Nom</label>
+                <input required type="text" name="nom" placeholder="nom de l'article ..." class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
+            </div>
+
+            {# description de l'article #}
+            <div class="flex flex-wrap md:my-4 my-0">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Description</label>
+                <textarea required type="text" name="description" placeholder="description ..." class="border-0 w-full p-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs"></textarea>
+            </div>
+
+            {# Prix de l'article #}
+            <div class="flex flex-wrap md:my-4 my-0">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Prix</label>
+                <input required type="number" min="0" name="prix" placeholder="prix de l'article ..." class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+            </div>
+
+            {# Catégorie de l'article #}
+            <div class="flex flex-wrap md:my-4 my-0">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Catégorie</label>
+                <select required type="select" name="categorie" class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
+                    {% for item in categories %}
+                        <option>{{item}}</options>
+                    {% endfor %}
+                </select>
+            </div>
+
+            {# Submit #}
+            <button type="submit" name="ajoutArticle" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
+        </form>
+
+        <form class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+            <legend class="text-lg tracking-wide basis-1/2">Ajouter une catégorie</legend>
+
+            {# Nom de la catégorie #}
+            <div class="flex flex-wrap my-4">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Nom</label>
+                <input required type="text" name="nom" placeholder="nom de la catégorie ..." class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
+            </div>
+            
+            {# Submit #}
+            <button type="submit" name="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
+        </form>
+
+        <form class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+            <legend class="text-lg tracking-wide basis-1/2">Fermeture et Ouverture</legend>
+
+            {# choisir date #}
+            <div class="flex flex-wrap my-4">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Date</label>
+                <input type="date" name="date" value="{{ "now"|date("Y-m-d") }}"  min="{{ "now"|date("Y-m-d") }}" placeholder="Select Date" class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
+            </div>
+            
+            {# Ouvrir #}
+            <button type="submit" name="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ouvrir</button>
+            
+            {# Fermer #}
+            <button type="submit" name="ajoutCategorie" class="mt-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Fermer</button>
+        </form>
+
+        <form class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 row-span-2 col-span-5 h-min">
+            <legend class="text-lg tracking-wide basis-1/2">Gérer Ouvertures et fermetures exceptionnelles</legend>
+            
+            <div class="overflow-auto p-4 bg-gray-300 mt-2 rounded h-96">
+                {% for item in ouvert %}
+                    <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 items-center rounded">
+                        <div class="md:col-span-5 col-span-4">
+                            <span class="text-green-500 mr-8 text-xl">Ouverture spécial</span>
+                            {{item}}
+                        </div>
+                        <button type="submit" name="supprimerOuverture" value="{{item}}" class="md:col-span-1 col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                    </div>
+                {% endfor %}
+                {% for item in fermer %}
+                    <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 items-center rounded">
+                        <div class="md:col-span-5 col-span-4">
+                            <span class="text-red-500 mr-8 text-xl">Fermeture spécial</span>
+                            {{item}}
+                        </div>
+                        <button type="submit" name="supprimerFermeture" value="{{item}}" class="md:col-span-1 col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
     </div>
-    
-</div>
+
 {% endblock %}
