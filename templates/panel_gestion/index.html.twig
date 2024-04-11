@@ -9,7 +9,7 @@
     {% include 'staffNavBar.html.twig' %}
     
     <div id="menu" class="py-8 px-16 bg-blue-50 grid md:grid-cols-5 grid-rows-5">
-        <form class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 md:row-span-2 row-span-1 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 md:row-span-2 row-span-1 col-span-5 h-min">
             <legend class="lg:text-lg sm:text-base text-sm tracking-wide">Ajouter un Article</legend>
             
             {# Nom de l'article #}
@@ -40,11 +40,14 @@
                 </select>
             </div>
 
+            
+            <input type="hidden" name="token" value="{{ csrf_token('ajouter-article') }}">
+
             {# Submit #}
-            <button type="submit" name="ajoutArticle" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
+            <button type="submit" name="gestion-submit" value="ajoutArticle" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
         </form>
 
-        <form class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
             <legend class="text-lg tracking-wide basis-1/2">Ajouter une catégorie</legend>
 
             {# Nom de la catégorie #}
@@ -53,11 +56,13 @@
                 <input required type="text" name="nom" placeholder="nom de la catégorie ..." class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
             </div>
             
+            <input type="hidden" name="token" value="{{ csrf_token('ajouter-categorie') }}">
+
             {# Submit #}
-            <button type="submit" name="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
+            <button type="submit" name="gestion-submit" value="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
         </form>
 
-        <form class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
             <legend class="text-lg tracking-wide basis-1/2">Fermeture et Ouverture</legend>
 
             {# choisir date #}
@@ -65,37 +70,42 @@
                 <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Date</label>
                 <input type="date" name="date" value="{{ "now"|date("Y-m-d") }}"  min="{{ "now"|date("Y-m-d") }}" placeholder="Select Date" class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs">
             </div>
+
+            <input type="hidden" name="token" value="{{ csrf_token('modifier-calendrier') }}">
             
             {# Ouvrir #}
-            <button type="submit" name="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ouvrir</button>
-            
+            <button type="submit" name="gestion-submit" value="ouvert" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ouvrir</button>
+
             {# Fermer #}
-            <button type="submit" name="ajoutCategorie" class="mt-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Fermer</button>
+            <button type="submit" name="gestion-submit" value="fermer" class="mt-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Fermer</button>
         </form>
 
-        <form class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 row-span-2 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
             <legend class="text-lg tracking-wide basis-1/2">Gérer Ouvertures et fermetures exceptionnelles</legend>
             
             <div class="overflow-auto p-4 bg-gray-300 mt-2 rounded h-96">
                 {% for item in ouvert %}
                     <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 items-center rounded">
-                        <div class="md:col-span-5 col-span-4">
+                        <div class="col-span-4">
                             <span class="text-green-500 mr-8 text-xl">Ouverture spécial</span>
                             {{item}}
                         </div>
-                        <button type="submit" name="supprimerOuverture" value="{{item}}" class="md:col-span-1 col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                        <button type="submit" name="gestion-submit-suppression" value="{{item}}" class="col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
                     </div>
                 {% endfor %}
                 {% for item in fermer %}
                     <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 items-center rounded">
-                        <div class="md:col-span-5 col-span-4">
+                        <div class="col-span-4">
                             <span class="text-red-500 mr-8 text-xl">Fermeture spécial</span>
                             {{item}}
                         </div>
-                        <button type="submit" name="supprimerFermeture" value="{{item}}" class="md:col-span-1 col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                        <button type="submit" name="gestion-submit-suppression" value="{{item}}" class="col-span-2 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
                     </div>
                 {% endfor %}
             </div>
+
+            <input type="hidden" name="token" value="{{ csrf_token('supprimer-calendrier') }}">
+
         </form>
     </div>
 
