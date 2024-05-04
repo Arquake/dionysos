@@ -70,13 +70,15 @@ function backReservation() {
 
 (document.getElementById("date-picker")).addEventListener("blur", ()=> {
     formDate = document.getElementById("date-picker").value
-    chosenDate = new Date(chosenDate)
+
+    chosenDate = new Date(formDate)
+
     if (dateFermer.includes(formDate)){
         alert('Nous sommes fermer exceptionnellement le '+formDate)
         document.getElementById("date-picker").value = ""
     }
     else if (!dateOuvert.includes(formDate) && (chosenDate.getDay() == 1 || chosenDate.getDay() == 0)) {
-        alert('L\'établissement est fermé les Lundis et Samedis')
+        alert('L\'établissement est fermé les Lundis et Dimanches')
         document.getElementById("date-picker").value = ""
     }
 })

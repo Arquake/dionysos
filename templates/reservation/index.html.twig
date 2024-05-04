@@ -44,12 +44,19 @@
 
                 </form>
             </section>
-
             
         </div>
 
         {% include 'footer.html.twig' %}
 
         <script src="{{asset('js/reservation.js')}}"></script>
+        <script>
+            {% for item in fermer %}
+                dateFermer.push("{{item.date | date("Y")}}-{{item.date | date("m")}}-{{item.date | date("d")}}");
+            {% endfor %}
+            {% for item in ouvert %}
+                dateOuvert.push("{{item.date | date("Y")}}-{{item.date | date("m")}}-{{item.date | date("d")}}");
+            {% endfor %}
+        </script>
     </div>
 {% endblock %}
