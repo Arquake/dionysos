@@ -20,6 +20,31 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+    /**
+     * @return Reservation[]
+     */
+    public function findByDateAfter(string $date): array{
+
+        return $this->createQueryBuilder('r')
+        ->where('r.date >= :date')
+        ->orderBy('r.date', 'ASC')
+        ->setParameter('date', $date)
+        ->getQuery()
+        ->getResult();
+    }
+
+    /**
+     * @return Reservation[]
+     */
+    public function findByDateBefore(string $date): array{
+
+        return $this->createQueryBuilder('r')
+        ->where('r.date < :date')
+        ->orderBy('r.date', 'ASC')
+        ->setParameter('date', $date)
+        ->getQuery()
+        ->getResult();
+    }
 
     //    /**
     //     * @return Reservation[] Returns an array of Reservation objects

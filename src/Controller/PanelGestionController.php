@@ -45,20 +45,29 @@ class PanelGestionController extends AbstractController
                 }
             }
 
-        } else if ($payload->get('gestion-article-prix') != null && $payload->get('article-prix') > 0) {
-            $carte->find($payload->get('gestion-article-prix'))
-                        ->setPrix($payload->get('article-prix'));
-            $em->flush();
-
-
-        }else if ($payload->get('gestion-article-submit-suppression') != null) {
-            $object = $carte->find($payload->get('gestion-article-submit-suppression'));
-            if ($object != null) {
-                $em->remove($object);
+        } else if ($this->isCsrfTokenValid('gestion-articles', $payload->get('token'))) {
+            if ($payload->get('gestion-article-prix') != null && $payload->get('article-prix') > 0) {
+                $carte->find($payload->get('gestion-article-prix'))
+                      ->setPrix($payload->get('article-prix'));
                 $em->flush();
+    
+    
+            }else if ($payload->get('gestion-article-quantite') != null) {
+                $object = $carte->find($payload->get('gestion-article-quantite'));
+                    $carte->find($payload->get('gestion-article-quantite'))
+                          ->setQuantite($payload->get('article-stock'));
+                    $em->flush();
+    
+            }else if ($payload->get('gestion-article-submit-suppression') != null) {
+                $object = $carte->find($payload->get('gestion-article-submit-suppression'));
+                if ($object != null) {
+                    $em->remove($object);
+                    $em->flush();
+                }
+    
             }
 
-        } else if ($payload->get('gestion-submit') != null){
+        } else if ($payload->get('gestion-submit') != null) {
             switch($payload->get('gestion-submit')){
                 case 'ajoutArticle':
                     $this->ajouterArticle($em, $payload);

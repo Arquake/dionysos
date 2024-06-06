@@ -1,3 +1,15 @@
+{% if vientDeReserver %}
+    {% if reservationReussi %}
+        <div class="bg-green-200 rounded border-2 border-green-400 font-normal text-green-800 p-4">
+            Votre réservation à été enregistrer avec succès
+        </div>
+    {% else %}
+        <div class="bg-red-200 rounded border-2 border-red-400 font-normal text-red-800 p-4">
+            Une erreur est survenue et la réservation n'a pas pu s'effectuer
+        </div>
+    {% endif %}
+{% endif %}
+
 <div class="flex flex-wrap mt-8 pb-8">
     <label for="" class="item-label text-left text-3xl text-neutral-900">Nombres de couverts</label>
     <div class="flex flex-row lg:gap-4 gap-2 pl-4 w-full py-3"> 

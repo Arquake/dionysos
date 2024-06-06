@@ -32,6 +32,18 @@ class Reservation
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $horraire = null;
 
+    #[ORM\Column(length: 17)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $comments = null;
+
+    #[ORM\Column(length: 5, nullable: true)]
+    private ?string $civilite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +117,54 @@ class Reservation
     public function setHorraire(\DateTimeInterface $horraire): static
     {
         $this->horraire = $horraire;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): static
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getCivilite(): ?string
+    {
+        return $this->civilite;
+    }
+
+    public function setCivilite(?string $civilite): static
+    {
+        $this->civilite = $civilite;
 
         return $this;
     }

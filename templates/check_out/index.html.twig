@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dionysos - Checkout{% endblock %}
+
+{% block body %}
+
+    <div>
+        {% include 'staffNavBar.html.twig' %}
+
+        {% if notFound %}
+            <div>
+
+            </div>
+            NotFound
+        {% else %}
+            <div class="m-8 p-8 shadow-md rounded-lg">
+                <div class=" grid grid-cols-4 grid-rows-4 gap-y-12">
+                    <div class="col-span-1 row-span-1">Civilité : {{ reservation.civilite }}</div>
+                    <div class="col-span-1 row-span-1">Nom : {{ reservation.nom }}</div>
+                    <div class="col-span-1 row-span-1">Prénom : {{ reservation.prenom }}</div>
+
+                    <div class="col-span-1 row-span-1 row-start-2">Nombre de couverts : {{ reservation.couverts }}</div>
+                    <div class="col-span-1 row-span-1 row-start-2">Emplacement : {{ reservation.emplacement }}</div>
+                    <div class="col-span-1 row-span-1 row-start-2">Date : {{ reservation.date | date("d/m/Y") }}</div>
+                    <div class="col-span-1 row-span-1 row-start-2">Heure : {{ reservation.horraire | date("H:i") }}</div>
+
+                    <div class="col-span-1 row-span-1 row-start-3">Téléphone : {{ reservation.telephone }}</div>
+                    <div class="col-span-1 row-span-1 row-start-3">Email : {{ reservation.email }}</div>
+
+                    {% if reservation.comments != '' %}
+                        <div class="col-span-4 row-span-1 row-start-4">Commentaire
+                            <div class="bg-slate-300 shadow rounded p-4">
+                                {{ reservation.comments }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+            <form method="post" action="/panel-reservation" class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+
+
+
+            </form>
+        {% endif %}
+
+
+    </div>
+{% endblock %}
