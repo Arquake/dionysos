@@ -40,15 +40,18 @@
 
             <div class="col-span-4">
                 <p class="text-white">Articles Commandés</p>
-                <div class="bg-white rounded p-4 mt-4" id="liste-commandes">
-                    test test
+                <div class="bg-white rounded p-4 grid grid-cols-8 text-left" id="liste-commandes">
+                    <div class="col-span-5 p-2">Article</div>
+                    <div class="col-span-1 col-start-6 p-2">Quantité</div>
+                    <div class="col-span-1 col-start-7 p-2">prix</div>
+                    <div class="col-span-1 col-start-8 p-2">suppression</div>
                 </div>
             </div>
 
             <div class="col-span-4 col-start-6">
                 <p class="text-white">Listes des Articles</p>
                 <div class="mt-4">
-                    <select class="rounded-lg font-normal p-4">
+                    <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0">
                         <option value="null">-- Choisissez une option --</option>
                         {% set currentCategory = null %}
                         {% for item in carte %}
@@ -75,5 +78,11 @@
         </form>
 
         <script src="{{asset('js/checkoutForm.js')}}"></script>
+        <script>
+            {% for item in carte %}
+                articlesList['{{ item.id }}'] = {'nom':"{{ item.nom|e('js') }}",'prix':"{{ item.prix }}"};
+            {% endfor %}
+            console.log(articlesList);
+        </script>
     </div>
 {% endblock %}
