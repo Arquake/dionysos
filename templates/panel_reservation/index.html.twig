@@ -6,59 +6,50 @@
 
 <div>
     {% include 'staffNavBar.html.twig' %}
-    
-    <div id="menu" class="py-8 px-16 bg-gray-50">
-        <div class="mx-16"></div>
-        {% if is_granted('ROLE_ADMIN') %}
-            test
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SERVEUR') %}
-            test2
-        {% endif %}
+
+    <div class="bg-blue-50 p-8 h-screen">
+
+        {% if reservations_futur | length > 0 %}
+                <div class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+                    <legend class="text-lg tracking-wide basis-1/2">Gérer les réservations</legend>
+
+                    <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
+                        {% for item in reservations_futur %}
+                            <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
+                                <div class="col-span-2 font-normal overflow-hidden">
+                                    {{item.civilite}} {{item.nom}} {{item.prenom}}
+                                </div>
+                                <div class="col-span-1 font-normal">
+                                    {{item.date | date("d/m/Y")}} | {{item.horraire | date("H:i")}}
+                                </div>
+                                <div class="flex gap-2 basis-1/4 col-span-1">
+                                    <img alt="couverts" src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="md:h-6 h-5">
+                                    <span id="recap-couverts" class="md:text-base text-xs">{{item.couverts}}</span>
+                                    <img alt="emplacement" src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="md:h-6 h-5">
+                                    <span id="recap-lieu" class="md:text-base text-xs">{{item.emplacement}}</span>
+                                </div>
+                                <div class="col-span-1 font-normal">
+                                    {{item.email}}
+                                </div>
+                                <div class="col-span-1 font-normal">
+                                    {{item.telephone}}
+                                </div>
+                                <form method="post" action="/checkout">
+                                    <button type="submit" name="gestion-reservation-checkout-id" value="{{item.id}}" class="col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Checkout</button>
+                                    <input type="hidden" name="token" value="{{ csrf_token('checkout-gestion-reservation') }}">
+                                </form>
+                                <form method="post" action="/panel-reservation">
+                                    <button type="submit" name="gestion-reservation-submit-suppression" value="{{item.id}}" class="col-span-1 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                                    <input type="hidden" name="token" value="{{ csrf_token('gestion-articles') }}">
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            {% endif %}
+
     </div>
 
-
-    {% if reservations_futur | length > 0 %}
-            <div class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
-                <legend class="text-lg tracking-wide basis-1/2">Gérer les réservations</legend>
-                
-                <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
-                    {% for item in reservations_futur %}
-                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
-                            <div class="col-span-2 font-normal overflow-hidden">
-                                {{item.civilite}} {{item.nom}} {{item.prenom}}
-                            </div>
-                            <div class="col-span-1 font-normal">
-                                {{item.date | date("d/m/Y")}} | {{item.horraire | date("H:i")}}
-                            </div>
-                            <div class="flex gap-2 basis-1/4 col-span-1">
-                                <img src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="md:h-6 h-5">
-                                <span id="recap-couverts" class="md:text-base text-xs">{{item.couverts}}</span>
-                                <img src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="md:h-6 h-5">
-                                <span id="recap-lieu" class="md:text-base text-xs">{{item.emplacement}}</span>
-                            </div>
-                            <div class="col-span-1 font-normal">
-                                {{item.email}}
-                            </div>
-                            <div class="col-span-1 font-normal">
-                                {{item.telephone}}
-                            </div>
-                            <form method="post" action="/checkout">
-                                <button type="submit" name="gestion-reservation-checkout-id" value="{{item.id}}" class="col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Checkout</button>
-                                <input type="hidden" name="token" value="{{ csrf_token('checkout-gestion-reservation') }}">
-                            </form>
-                            <form method="post" action="/panel-reservation">
-                                <button type="submit" name="gestion-reservation-submit-suppression" value="{{item.id}}" class="col-span-1 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
-                                <input type="hidden" name="token" value="{{ csrf_token('gestion-articles') }}">
-                            </form>
-                        </div>
-                    {% endfor %}
-                </div>
-
-
-
-            </div>
-        {% endif %}
-    
 </div>
 {% endblock %}

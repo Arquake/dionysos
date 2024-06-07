@@ -15,7 +15,7 @@ class MenuController extends AbstractController
     #[Route('/menu', name: 'app_menu')]
     public function index(CarteRepository $repository, EntityManagerInterface $em): Response
     {
-        $plats = $repository->findAll();
+        $plats = $repository->findAllOrderByCategorie();
 
         /*$plat = new Carte();
         $plat   -> setNom("Bouteille d'eau")

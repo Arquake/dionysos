@@ -7,43 +7,73 @@
     <div>
         {% include 'staffNavBar.html.twig' %}
 
-        {% if notFound %}
-            <div>
 
-            </div>
-            NotFound
-        {% else %}
-            <div class="m-8 p-8 shadow-md rounded-lg">
-                <div class=" grid grid-cols-4 grid-rows-4 gap-y-12">
-                    <div class="col-span-1 row-span-1">Civilité : {{ reservation.civilite }}</div>
-                    <div class="col-span-1 row-span-1">Nom : {{ reservation.nom }}</div>
-                    <div class="col-span-1 row-span-1">Prénom : {{ reservation.prenom }}</div>
+        <legend class="ml-8 mt-4 text-xl">Informations Client</legend>
+        <div class="m-8 p-8 shadow-md rounded-lg">
+            <div class=" grid grid-cols-4 grid-rows-4 gap-y-12">
+                <div class="col-span-1 row-span-1">Civilité : <span class="font-normal">{{ reservation.civilite }}</span></div>
+                <div class="col-span-1 row-span-1">Nom : <span class="font-normal">{{ reservation.nom }}</span></div>
+                <div class="col-span-1 row-span-1">Prénom : <span class="font-normal">{{ reservation.prenom }}</span></div>
 
-                    <div class="col-span-1 row-span-1 row-start-2">Nombre de couverts : {{ reservation.couverts }}</div>
-                    <div class="col-span-1 row-span-1 row-start-2">Emplacement : {{ reservation.emplacement }}</div>
-                    <div class="col-span-1 row-span-1 row-start-2">Date : {{ reservation.date | date("d/m/Y") }}</div>
-                    <div class="col-span-1 row-span-1 row-start-2">Heure : {{ reservation.horraire | date("H:i") }}</div>
+                <div class="col-span-1 row-span-1 row-start-2">Nombre de couverts : <span class="font-normal">{{ reservation.couverts }}</span></div>
+                <div class="col-span-1 row-span-1 row-start-2">Emplacement : <span class="font-normal">{{ reservation.emplacement }}</span></div>
+                <div class="col-span-1 row-span-1 row-start-2">Date : <span class="font-normal">{{ reservation.date | date("d/m/Y") }}</span></div>
+                <div class="col-span-1 row-span-1 row-start-2">Heure : <span class="font-normal">{{ reservation.horraire | date("H:i") }}</span></div>
 
-                    <div class="col-span-1 row-span-1 row-start-3">Téléphone : {{ reservation.telephone }}</div>
-                    <div class="col-span-1 row-span-1 row-start-3">Email : {{ reservation.email }}</div>
+                <address class="col-span-1 row-span-1 row-start-3">Téléphone : <a href="tel:{{ reservation.telephone }}" class="font-normal text-blue-400 underline underline-offset-2">{{ reservation.telephone }}</a></address>
+                <address class="col-span-1 row-span-1 row-start-3">Email : <a href="mailto:{{ reservation.email }}" class="font-normal text-blue-400 underline underline-offset-2">{{ reservation.email }}</a></address>
 
-                    {% if reservation.comments != '' %}
-                        <div class="col-span-4 row-span-1 row-start-4">Commentaire
-                            <div class="bg-slate-300 shadow rounded p-4">
-                                {{ reservation.comments }}
-                            </div>
+                {% if reservation.comments != '' %}
+                    <div class="col-span-4 row-span-1 row-start-4">Commentaire
+                        <div class="bg-slate-300 shadow rounded p-4 whitespace-normal">
+                            {{ reservation.comments }}
                         </div>
-                    {% endif %}
-                </div>
-
+                    </div>
+                {% endif %}
             </div>
-            <form method="post" action="/panel-reservation" class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+
+        </div>
+
+        <legend class="ml-8 mt-4 text-xl">Articles Achetés</legend>
+        <form method="post" action="/panel-reservation" class="m-8 mt-4 p-8 shadow-md rounded-lg bg-slate-600 grid grid-cols-10 gap-12">
 
 
+            <div class="col-span-4">
+                <p class="text-white">Articles Commandés</p>
+                <div class="bg-white rounded p-4 mt-4" id="liste-commandes">
+                    test test
+                </div>
+            </div>
 
-            </form>
-        {% endif %}
+            <div class="col-span-4 col-start-6">
+                <p class="text-white">Listes des Articles</p>
+                <div class="mt-4">
+                    <select class="rounded-lg font-normal p-4">
+                        <option value="null">-- Choisissez une option --</option>
+                        {% set currentCategory = null %}
+                        {% for item in carte %}
+                            {% set closeOpt = false %}
+                            {% if item.categorie != currentCategory %}
+                                {% set closeOpt = true %}
+                                {% set currentCategory = item.categorie %}
+                                <optgroup label="{{ currentCategory }}">
 
+                            {% endif %}
+                                    <option value="{{ item.id }}">{{ item.nom }}</option>
+                        {% endfor %}
 
+                        </optgroup>
+                    </select>
+
+                </div>
+                <div class="grid grid-cols-3 pt-8">
+                    <button id="ajout-article" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full active:bg-blue-600 duration-150">Ajouter l'article</button>
+                    <button type="submit" name="checkout-validation" value="{{reservation.id}}" class="col-start-3 col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Valider</button>
+                </div>
+            </div>
+
+        </form>
+
+        <script src="{{asset('js/checkoutForm.js')}}"></script>
     </div>
 {% endblock %}

@@ -45,4 +45,9 @@ class CarteRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findAllOrderByCategorie(){
+        $qb = $this->createQueryBuilder('c')->orderBy('c.categorie','ASC');
+        return ($qb->getQuery()->execute());
+    }
 }

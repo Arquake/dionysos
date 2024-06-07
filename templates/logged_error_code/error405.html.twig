@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dionysos - Checkout{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        {% include 'staffNavBar.html.twig' %}
+
+
+        <div class="grid grid-cols-3">
+            <div class="border-2 border-red-600 bg-red-300 text-red-600 mt-8 rounded font-normal p-4 col-span-1 col-start-2">
+                La page n'est pas accessible par la méthode utilisé<br><br>
+                {{ message|raw|nl2br }}
+                Code erreur : 405
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
