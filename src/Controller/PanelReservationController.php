@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CarteRepository;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class PanelReservationController extends AbstractController
     }
 
     #[Route('/panel-reservation', name: 'app_panel_reservation.post', methods: ['POST'])]
-    public function postIndex(Request $request, EntityManagerInterface $em, ReservationRepository $reservations): Response
+    public function postIndex(Request $request, EntityManagerInterface $em, ReservationRepository $reservations, CarteRepository $carte): Response
     {
         $payload = $request->getPayload();
 
@@ -45,6 +46,21 @@ class PanelReservationController extends AbstractController
             'message' =>
                 'Aucune Réservations n\'a été trouvé avec l\'identifiant fournit<br><br>Veuillez vérifier que vous accédez bien au service depuis l\'onglet "<span class="font-bold italic underline">Réservations</span>"<br><br>',
             ]);
+        } else if ($payload->get('checkout-validation') != null &&
+            $this->isCsrfTokenValid('checkout-reservation', $payload->get('token'))){
+            $arr = [];
+            $totalSum = 0;
+            foreach ( $payload as $key => $value) {
+                if(filter_var($key, FILTER_VALIDATE_INT) !== false){
+                    $arr[$value] = $carte->find($key)->getPrix();
+                    $totalSum += ($arr[$value] * $value);
+                }
+            }
+            return $this->render('panel_reservation/checkout_completed.html.twig', [
+                'articles' => '',
+                'total' => ''
+            ]);
+
         }
 
         // invalid csrf token / aucun bouton n'est cliqué une erreur est généré

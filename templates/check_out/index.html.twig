@@ -35,7 +35,7 @@
         </div>
 
         <legend class="ml-8 mt-4 text-xl">Articles Achetés</legend>
-        <form method="post" action="/panel-reservation" class="m-8 mt-4 p-8 shadow-md rounded-lg bg-slate-600 grid grid-cols-10 gap-12">
+        <form method="post" id="form-articles" action="/panel-reservation" class="m-8 mt-4 p-8 shadow-md rounded-lg bg-slate-600 grid grid-cols-10 gap-12">
 
 
             <div class="col-span-4">
@@ -71,7 +71,8 @@
                 </div>
                 <div class="grid grid-cols-3 pt-8">
                     <button id="ajout-article" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full active:bg-blue-600 duration-150">Ajouter l'article</button>
-                    <button type="submit" name="checkout-validation" value="{{reservation.id}}" class="col-start-3 col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Valider</button>
+                    <input type="hidden" name="token" value="{{ csrf_token('checkout-reservation') }}">
+                    <button type="submit" id="checkout-validation" name="checkout-validation" value="{{reservation.id}}" class="col-start-3 col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Valider</button>
                 </div>
             </div>
 
@@ -82,7 +83,6 @@
             {% for item in carte %}
                 articlesList['{{ item.id }}'] = {'nom':"{{ item.nom|e('js') }}",'prix':"{{ item.prix }}"};
             {% endfor %}
-            console.log(articlesList);
         </script>
     </div>
 {% endblock %}
