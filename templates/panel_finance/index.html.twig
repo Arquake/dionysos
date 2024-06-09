@@ -6,11 +6,14 @@
 
 <div>
     {% include 'staffNavBar.html.twig' %}
-    
+
     <div id="menu" class="p-16 bg-blue-50 grid grid-cols-12">
         <div class="col-span-5 bg-white shadow-md rounded p-8">
             revenu mensuel
-            {{ render_chart(chart) }}
+            <div class="h-32">
+                {{ render_chart(chart) }}
+            </div>
+
         </div>
 
         <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8">

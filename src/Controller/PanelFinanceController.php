@@ -7,14 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 #[IsGranted("ROLE_ADMIN")]
 class PanelFinanceController extends AbstractController
 {
     #[Route('/panel-finance', name: 'app_panel_finance')]
-    public function index(UxPackageRepository $packageRepository, ChartBuilderInterface $chartBuilder): Response
+    public function index(ChartBuilderInterface $chartBuilder): Response
     {
-        $package = $packageRepository->find('chartjs');
 
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
@@ -43,7 +43,6 @@ class PanelFinanceController extends AbstractController
 
         return $this->render('panel_finance/index.html.twig', [
             'chart' => $chart,
-            'package' => $package,
         ]);
     }
 }

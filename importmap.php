@@ -28,4 +28,14 @@ return [
     'chart.js' => [
         'version' => '3.9.1',
     ],
+    'flowbite' => [
+        'version' => '2.3.0',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'flowbite/dist/flowbite.min.css' => [
+        'version' => '2.3.0',
+        'type' => 'css',
+    ],
 ];
