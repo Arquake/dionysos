@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CarteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -12,10 +13,10 @@ use Symfony\Component\ExpressionLanguage\Expression;
 class PanelCarteController extends AbstractController
 {
     #[Route('/panel-carte', name: 'app_panel_carte')]
-    public function index(): Response
+    public function index(CarteRepository $carte): Response
     {
         return $this->render('panel_carte/index.html.twig', [
-            'controller_name' => 'PanelCarteController',
+            'carte' => $carte->findAllOrderByCategorie(),
         ]);
     }
 }

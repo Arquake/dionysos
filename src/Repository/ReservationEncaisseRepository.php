@@ -53,4 +53,10 @@ class ReservationEncaisseRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getOneOrNullResult() !== null;
     }
+
+    public function reservationOrderedByDate() {
+        return $this->createQueryBuilder('r')
+            ->OrderBy('r.dateReservation', 'ASC')
+            ->getQuery()->execute();
+    }
 }

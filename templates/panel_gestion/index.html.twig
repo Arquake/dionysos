@@ -34,6 +34,12 @@
                 <input required type="number" min="0" step="0.01" name="prix" placeholder="prix de l'article ..." class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
             </div>
 
+            {# Marge de l'article #}
+            <div class="flex flex-wrap md:my-4 my-0">
+                <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Marge</label>
+                <input required type="number" min="0" step="0.01" name="prix" placeholder="marge de l'article en €" class="border-0 w-full px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+            </div>
+
             {# Catégorie de l'article #}
             <div class="flex flex-wrap md:my-4 my-0">
                 <label class="w-full text-start py-4 pr-4 font-normal xl:text-base md:text-sm text-xs">Catégorie</label>
@@ -121,9 +127,12 @@
                 
                 <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-96">
                     {% for item in articles %}
-                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 items-center rounded gap-8">
-                            <div class="col-span-2">
-                                {{item.nom}} | <input type='number' step='0.01' name="article-prix" value='{{item.prix}}' class="border-0 w-1/12 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
+                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 rounded gap-8">
+                            <div class="col-span-1 overflow-hidden text-nowrap">
+                                {{item.nom}}</div>
+                            <div class="col-span-1">
+                                prix : <input type='number' step='0.01' name="article-prix" value='{{item.prix}}' class="border-0 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
+                                | marge : <input type='number' step='0.01' name="article-prix" value='{{item.prix}}' class="border-0 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
                             </div>
                             <div class="col-span-1">
                                 Stock : <input type='number' name="article-stock" value='{{item.quantite}}' class="border-0 w-3/12 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">

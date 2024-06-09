@@ -47,6 +47,10 @@ class ReservationEncaisse
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $horraire = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $total = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +184,18 @@ class ReservationEncaisse
     public function setHorraire(\DateTimeInterface $horraire): static
     {
         $this->horraire = $horraire;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(string $total): static
+    {
+        $this->total = $total;
 
         return $this;
     }

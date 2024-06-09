@@ -23,12 +23,16 @@ currentListOfArticle = {};
 
 
 (document.getElementById("checkout-validation")).addEventListener("click", (e) => {
-    for(item in currentListOfArticle) {
-        itemElement = document.createElement('input');
-        itemElement.className = 'hidden';
-        itemElement.name = item;
-        itemElement.value = currentListOfArticle[item].quantity;
-        form.appendChild(itemElement);
+    if(Object.keys(currentListOfArticle).length != 0){
+        for(item in currentListOfArticle) {
+            itemElement = document.createElement('input');
+            itemElement.className = 'hidden';
+            itemElement.name = item;
+            itemElement.value = currentListOfArticle[item].quantity;
+            form.appendChild(itemElement);
+        }
+    } else {
+        e.preventDefault();
     }
 });
 

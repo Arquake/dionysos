@@ -19,10 +19,11 @@ class PanelReservationController extends AbstractController
 {
 
     #[Route('/panel-reservation', name: 'app_panel_reservation.get', methods: ['GET'])]
-    public function index(ReservationRepository $reservations): Response
+    public function index(ReservationRepository $reservations, ReservationEncaisseRepository $reservationEncaisse): Response
     {
         return $this->render('panel_reservation/index.html.twig', [
             'reservations_futur' => $reservations->findByDateAfter(date('d-m-Y')),
+            'reservations_passe' => $reservationEncaisse->reservationOrderedByDate()
         ]);
     }
 
@@ -42,6 +43,7 @@ class PanelReservationController extends AbstractController
                 return $this->render('panel_reservation/index.html.twig', [
                     'deleted' => true,
                     'reservations_futur' => $reservations->findByDateAfter(date('d-m-Y')),
+                    'reservations_passe' => $reservationEncaisse->reservationOrderedByDate()
                 ]);
             }
             return $this->generateError(400);
@@ -59,6 +61,9 @@ class PanelReservationController extends AbstractController
                     $totalSum += ($item->getPrix() * $value);
                 }
             }
+            if(count($arr) == 0){
+                return $this->generateError(409);
+            }
             $reservationSelected = $reservations->find($payload->get('checkout-validation'));
             $reservationEncaisse = new ReservationEncaisse();
             $reservationEncaisse->setIdReservation($payload->get('checkout-validation'))
@@ -71,7 +76,8 @@ class PanelReservationController extends AbstractController
                 ->setTelephone($reservationSelected->getTelephone())
                 ->setEmail($reservationSelected->getEmail())
                 ->setComments($reservationSelected->getComments())
-                ->setHorraire($reservationSelected->getHorraire());
+                ->setHorraire($reservationSelected->getHorraire())
+                ->setTotal($totalSum);
             $em->persist($reservationEncaisse);
             $em->remove($reservationSelected);
             $em->flush();
@@ -90,12 +96,6 @@ class PanelReservationController extends AbstractController
     private function generateError($errorCode): Response
     {
         switch ($errorCode) {
-            case 400:
-                // standard error
-                return $this->render('logged_error_code/error400.html.twig', [
-                    'message' =>
-                        'Aucune Réservations n\'a été trouvé avec l\'identifiant fournit<br><br>Veuillez vérifier que vous accédez bien au service depuis l\'onglet "<span class="font-bold italic underline">Réservations</span>"<br><br>',
-                ]);
             case 409 :
                 // conflict data
                 return $this->render('logged_error_code/error409.html.twig', [
@@ -107,6 +107,38 @@ class PanelReservationController extends AbstractController
                 return $this->render('logged_error_code/error406.html.twig', [
                     'message' => ''
                 ]);
+            default:
+                // standard error
+                return $this->render('logged_error_code/error400.html.twig', [
+                    'message' =>
+                        'Aucune Réservations n\'a été trouvé avec l\'identifiant fournit<br><br>Veuillez vérifier que vous accédez bien au service depuis l\'onglet "<span class="font-bold italic underline">Réservations</span>"<br><br>',
+                ]);
         }
+    }
+
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
+    #[Route('/visualisation-reservation-passe', name: 'visualisation-reservation-passe.post', methods: ['POST'])]
+    public function visualisationPostIndex(Request $request, ReservationEncaisseRepository $reservationEncaisse): Response {
+        $payload = $request->getPayload();
+        if(!$this->isCsrfTokenValid('visualisation-past-reservation', $payload->get('token'))){
+            return $this->generateError(406);
+        }
+
+        if ($payload->get('gestion-visualisation-past') == null) {
+            return $this->generateError(409);
+        }
+        $item = $payload->get('gestion-visualisation-past');
+        if($item == null){
+            return $this->generateError(400);
+        }
+        return $this->render('panel_reservation/visualisation.html.twig', [
+            'reservation' => $reservationEncaisse->find($payload->get('gestion-visualisation-past'))
+        ]);
+    }
+
+    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
+    #[Route('/visualisation-reservation-passe', name: 'visualisation-reservation-passe.get', methods: ['GET'])]
+    public function visualisationGetIndex(): Response {
+        return $this->generateError(406);
     }
 }
