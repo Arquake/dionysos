@@ -57,7 +57,7 @@ class PanelReservationController extends AbstractController
             foreach ( $payload as $key => $value) {
                 if(filter_var($key, FILTER_VALIDATE_INT) !== false){
                     $item = $carte->find($key);
-                    $arr[$key] = ['nom'=>$item->getNom(),'prix'=>$item->getPrix(),'categorie'=>$item->getCategorie(),'quantite'=>$value];
+                    $arr[$key] = ['nom'=>$item->getNom(),'prix'=>$item->getPrix(),'categorie'=>$item->getCategorie(),'quantite'=>$value,'marge'=>$item->getMarge()];
                     $totalSum += ($item->getPrix() * $value);
                 }
             }

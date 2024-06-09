@@ -48,7 +48,8 @@ class PanelGestionController extends AbstractController
         } else if ($this->isCsrfTokenValid('gestion-articles', $payload->get('token'))) {
             if ($payload->get('gestion-article-prix') != null && $payload->get('article-prix') > 0) {
                 $carte->find($payload->get('gestion-article-prix'))
-                      ->setPrix($payload->get('article-prix'));
+                    ->setPrix($payload->get('article-prix'))
+                    ->setMarge($payload->get('article-marge'));
                 $em->flush();
     
     
@@ -144,6 +145,7 @@ class PanelGestionController extends AbstractController
             $newArticle = (new Carte())
                 ->setNom($payload->get('nom'))
                 ->setPrix($payload->get('prix'))
+                ->setMarge($payload->get('marge'))
                 ->setCategorie($payload->get('categorie'))
                 ->setQuantite($payload->get('stock'));
             $em->persist($newArticle);

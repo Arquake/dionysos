@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CarteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CarteRepository::class)]
@@ -24,6 +25,9 @@ class Carte
 
     #[ORM\Column(length: 255)]
     private ?string $categorie = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $marge = null;
 
     public function getId(): ?int
     {
@@ -74,6 +78,18 @@ class Carte
     public function setCategorie(string $categorie): static
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getMarge(): ?string
+    {
+        return $this->marge;
+    }
+
+    public function setMarge(string $marge): static
+    {
+        $this->marge = $marge;
 
         return $this;
     }

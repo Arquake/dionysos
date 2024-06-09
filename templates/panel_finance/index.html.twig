@@ -7,14 +7,16 @@
 <div>
     {% include 'staffNavBar.html.twig' %}
     
-    <div id="menu" class="py-8 px-16 bg-gray-50">
-        <div class="mx-16"></div>
-        {% if is_granted('ROLE_ADMIN') %}
-            test
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_SERVEUR') %}
-            test2
-        {% endif %}
+    <div id="menu" class="p-16 bg-blue-50 grid grid-cols-12">
+        <div class="col-span-5 bg-white shadow-md rounded p-8">
+            revenu mensuel
+            {{ render_chart(chart) }}
+        </div>
+
+        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8">
+            marge brut
+        </div>
+
     </div>
     
 </div>
