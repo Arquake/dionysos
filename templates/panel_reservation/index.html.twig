@@ -9,8 +9,16 @@
 
     <div class="bg-blue-50 p-8 h-screen">
 
+        <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
+            <form class="grid grid-cols-8 gap-8 items-center">
+                <legend class="text-lg tracking-wide basis-1/2 col-span-1">Encaissement hors réservation</legend>
+
+                <input type="submit" value="Encaisser" class="bg-blue-500 p-2 rounded-lg text-white text-center col-span-1">
+            </form>
+        </div>
+
         {% if reservations_futur | length > 0 %}
-            <div class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+            <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
                 <legend class="text-lg tracking-wide basis-1/2">Gérer les réservations</legend>
 
                 <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
@@ -48,30 +56,31 @@
 
             </div>
         {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
-            <div class="py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
-                <legend class="text-lg tracking-wide basis-1/2">Réservations passés</legend>
+        {% if reservations_passe | length > 0 %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
+                    <legend class="text-lg tracking-wide basis-1/2">Réservations passés</legend>
 
-                <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
-                    {% for item in reservations_passe %}
-                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
-                            <div class="col-span-1 font-normal">
-                                id : {{item.idReservation}}
+                    <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
+                        {% for item in reservations_passe %}
+                            <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
+                                <div class="col-span-1 font-normal">
+                                    id : {{item.idReservation}}
+                                </div>
+                                <div class="col-span-6 font-normal overflow-hidden">
+                                    {{item.nom}} {{item.prenom}}
+                                </div>
+                                <form method="post" action="/visualisation-reservation-passe">
+                                    <button type="submit" name="gestion-visualisation-past" value="{{item.id}}" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Visualiser</button>
+                                    <input type="hidden" name="token" value="{{ csrf_token('visualisation-past-reservation') }}">
+                                </form>
                             </div>
-                            <div class="col-span-6 font-normal overflow-hidden">
-                                {{item.nom}} {{item.prenom}}
-                            </div>
-                            <form method="post" action="/visualisation-reservation-passe">
-                                <button type="submit" name="gestion-visualisation-past" value="{{item.id}}" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Visualiser</button>
-                                <input type="hidden" name="token" value="{{ csrf_token('visualisation-past-reservation') }}">
-                            </form>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
+
                 </div>
-
-            </div>
+            {% endif %}
         {% endif %}
-
 
     </div>
 

@@ -1,26 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dionysos - Gestion{% endblock %}
+{% block title %}Dionysos - Finance{% endblock %}
 
 {% block body %}
 
 <div>
     {% include 'staffNavBar.html.twig' %}
 
-    <div id="menu" class="p-16 bg-blue-50 grid grid-cols-12">
-        <div class="col-span-5 bg-white shadow-md rounded p-8">
-            revenu mensuel
-            <div class="h-32">
-                {{ render_chart(chart) }}
+    <div id="menu" class="p-16 bg-blue-50 grid grid-cols-12 gap-10">
+        <div class="col-span-5 bg-white shadow-md rounded p-8 pb-10">
+            <div class="h-64">
+                <legend class="mb-4">Revenus des réservations</legend>
+                {{ render_chart(revenu_chart) }}
             </div>
 
         </div>
 
-        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8">
-            marge brut
+        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8 pb-10">
+            <div class="h-64">
+                <legend class="mb-4">Couverts des réservations</legend>
+                {{ render_chart(couverts_chart) }}
+            </div>
+        </div>
+
+        <div class="col-span-5 bg-white shadow-md rounded p-8 pb-10">
+            <div class="h-64">
+                <legend class="mb-4">Revenus des non-réservations</legend>
+                {{ render_chart(revenu_chart) }}
+            </div>
+
+        </div>
+
+        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8 pb-10">
+            <div class="h-64">
+                <legend class="mb-4">Couverts des non-réservations</legend>
+                {{ render_chart(couverts_chart) }}
+            </div>
         </div>
 
     </div>
-    
+
 </div>
 {% endblock %}

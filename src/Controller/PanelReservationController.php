@@ -54,11 +54,13 @@ class PanelReservationController extends AbstractController
             }
             $arr = [];
             $totalSum = 0;
+            $totalMarge = 0;
             foreach ( $payload as $key => $value) {
                 if(filter_var($key, FILTER_VALIDATE_INT) !== false){
                     $item = $carte->find($key);
                     $arr[$key] = ['nom'=>$item->getNom(),'prix'=>$item->getPrix(),'categorie'=>$item->getCategorie(),'quantite'=>$value,'marge'=>$item->getMarge()];
                     $totalSum += ($item->getPrix() * $value);
+                    $totalMarge += ($item->getMarge() * $value);
                 }
             }
             if(count($arr) == 0){
@@ -77,7 +79,8 @@ class PanelReservationController extends AbstractController
                 ->setEmail($reservationSelected->getEmail())
                 ->setComments($reservationSelected->getComments())
                 ->setHorraire($reservationSelected->getHorraire())
-                ->setTotal($totalSum);
+                ->setTotal($totalSum)
+                ->setMarge($totalMarge);
             $em->persist($reservationEncaisse);
             $em->remove($reservationSelected);
             $em->flush();

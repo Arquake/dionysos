@@ -50,6 +50,9 @@ class ReservationEncaisse
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $total = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $marge = null;
+
 
     public function getId(): ?int
     {
@@ -196,6 +199,18 @@ class ReservationEncaisse
     public function setTotal(string $total): static
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    public function getMarge(): ?string
+    {
+        return $this->marge;
+    }
+
+    public function setMarge(string $marge): static
+    {
+        $this->marge = $marge;
 
         return $this;
     }
