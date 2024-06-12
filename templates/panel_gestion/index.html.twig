@@ -12,8 +12,8 @@
         test
     {% endif %}
     
-    <div id="menu" class="py-8 px-16 bg-blue-50 grid md:grid-cols-5 grid-rows-6">
-        <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-2 md:row-span-2 row-span-1 col-span-5 h-min">
+    <div id="menu" class="py-8 px-16 bg-blue-50 grid md:grid-cols-5">
+        <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl col-span-5 h-min">
             <legend class="lg:text-lg sm:text-base text-sm tracking-wide">Ajouter un Article</legend>
             
             {# Nom de l'article #}
@@ -57,7 +57,7 @@
             <button type="submit" name="gestion-submit" value="ajoutArticle" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
         </form>
 
-        <form method="post" action="/panel-gestion" class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl col-span-5 h-min">
             <legend class="text-lg tracking-wide basis-1/2">Ajouter une catégorie</legend>
 
             {# Nom de la catégorie #}
@@ -72,7 +72,7 @@
             <button type="submit" name="gestion-submit" value="ajoutCategorie" class="mt-2 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Ajouter</button>
         </form>
 
-        <form method="post" action="/panel-gestion" class="row-span-1 md:mt-0 mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-4 md:col-span-2 col-span-5 h-min">
+        <form method="post" action="/panel-gestion" class="mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl col-span-5 h-min">
             <legend class="text-lg tracking-wide basis-1/2">Fermeture et Ouverture</legend>
 
             {# choisir date #}
@@ -91,7 +91,7 @@
         </form>
 
         {% if ouvert | length > 0 or fermer | length > 0 %}
-            <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+            <form method="post" action="/panel-gestion" class="mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl col-span-5 md:mt-8 h-min">
                 <legend class="text-lg tracking-wide basis-1/2">Gérer Ouvertures et fermetures exceptionnelles</legend>
                 
                 <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-96">
@@ -120,26 +120,27 @@
             </form>
         {% endif %}
 
-
         {% if articles | length > 0 %}
-            <form method="post" action="/panel-gestion" class="shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 md:col-span-5 row-span-2 col-span-2 md:mt-8 h-min">
+            <form method="post" action="/panel-gestion" class="mt-8 shadow-md py-4 px-8 w-full bg-white rounded-xl md:col-start-1 col-span-5 md:mt-8 h-min">
                 <legend class="text-lg tracking-wide basis-1/2">Gérer les articles</legend>
                 
                 <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-96">
                     {% for item in articles %}
-                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 rounded gap-8">
-                            <div class="col-span-1 overflow-hidden text-nowrap">
-                                {{item.nom}}</div>
-                            <div class="col-span-1">
-                                prix : <input type='number' step='0.01' name="article-prix" value='{{item.prix}}' class="border-0 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
-                                | marge : <input type='number' step='0.01' name="article-marge" value='{{item.marge}}' class="border-0 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
+                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-6 grid-rows-3 rounded gap-4">
+                            <div class="md:col-span-4 col-span-3 overflow-hidden text-nowrap">
+                                {{item.nom}}
                             </div>
-                            <div class="col-span-1">
-                                Stock : <input type='number' name="article-stock" value='{{item.quantite}}' class="border-0 w-3/12 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                            <div class="xl:col-span-1 md:col-span-2 col-span-3 xl:row-start-2 row-start-1 xl:col-start-5">
+                                Stock : <input type='number' name="article-stock" value='{{item.quantite}}' class="border-0 w-1/3 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
                             </div>
-                            <button type="submit" name="gestion-article-quantite" value="{{item.id}}" class="col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Modifier Stock</button>
-                            <button type="submit" name="gestion-article-prix" value="{{item.id}}" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Modifier Prix</button>
-                            <button type="submit" name="gestion-article-submit-suppression" value="{{item.id}}" class="col-span-1 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                            <div class="xl:col-span-4 col-span-6 row-span-1 row-start-2 col-start-1">
+                                prix : <input type='number' step='0.01' name="article-prix" value='{{item.prix}}' class="border-0 lg:w-1/6 md:w-1/4 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
+                                |
+                                marge : <input type='number' step='0.01' name="article-marge" value='{{item.marge}}' class="border-0 lg:w-1/6 md:w-1/4 w-1/5 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-50 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"> €
+                            </div>
+                            <button type="submit" name="gestion-article-quantite" value="{{item.id}}" class="col-span-2 row-span-1 row-start-3 bg-green-500 py-2 px-4 rounded-lg text-white text-xs text-center w-full">Modifier Stock</button>
+                            <button type="submit" name="gestion-article-prix" value="{{item.id}}" class="col-span-2 row-span-1 row-start-3 bg-blue-500 py-2 px-4 rounded-lg text-white text-xs text-center w-full">Modifier Prix</button>
+                            <button type="submit" name="gestion-article-submit-suppression" value="{{item.id}}" class="col-span-2 row-span-1 row-start-3 bg-red-500 py-2 px-4 rounded-lg text-white text-xs text-center w-full">Supprimer</button>
                         </div>
                     {% endfor %}
                 </div>
@@ -149,5 +150,7 @@
             </form>
         {% endif %}
     </div>
+
+</div>
 
 {% endblock %}

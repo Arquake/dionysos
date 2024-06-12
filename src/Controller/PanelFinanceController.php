@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\NonReservationEncaisseRepository;
 use App\Repository\ReservationEncaisseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +20,9 @@ class PanelFinanceController extends AbstractController
     private string $currentYear;
     private ChartBuilderInterface $chartBuilder;
     private ReservationEncaisseRepository $reservations;
+    private NonReservationEncaisseRepository $nonReservationEncaisses;
 
-    public function __construct(ChartBuilderInterface $chartBuilder, ReservationEncaisseRepository $reservations){
+    public function __construct(ChartBuilderInterface $chartBuilder, ReservationEncaisseRepository $reservations, NonReservationEncaisseRepository $nonReservationEncaisses){
         $this->currentMonth = (int) (new \DateTime(null, new \DateTimeZone('Europe/Paris')))->format('m');
         $this->currentYear = (new \DateTime(null, new \DateTimeZone('Europe/Paris')))->format('Y');
 
@@ -34,14 +36,17 @@ class PanelFinanceController extends AbstractController
 
         $this->reservations = $reservations;
         $this->chartBuilder = $chartBuilder;
+        $this->nonReservationEncaisses = $nonReservationEncaisses;
     }
 
     #[Route('/panel-finance', name: 'app_panel_finance')]
     public function index(): Response
     {
         return $this->render('panel_finance/index.html.twig', [
-            'revenu_chart' => $this->generateRevenuChart(),
-            'couverts_chart' => $this->generateCouvertsChart(),
+            'revenu_reservation_chart' => $this->generateReservationRevenuChart(),
+            'couverts_reservation_chart' => $this->generateReservationCouvertsChart(),
+            'revenu_encaissement_chart' => $this->generateEncaissementRevenuChart(),
+            'couverts_encaissement_chart' => $this->generateEncaissementCouvertsChart(),
         ]);
     }
 
@@ -62,7 +67,7 @@ class PanelFinanceController extends AbstractController
         return $sum;
     }
 
-    private function generateRevenuChart(){
+    private function generateReservationRevenuChart(){
         $revenuMensuel = [];
         $margeBrut = [];
         $yearPassed = false;
@@ -70,47 +75,46 @@ class PanelFinanceController extends AbstractController
         for($i = 1 ; $i < 13; $i++){
             if($yearPassed){
                 $items = $this->reservations->findReservationsByMonth($this->currentYear,($this->currentMonth+$i)%12);
-                array_push($revenuMensuel, $this->sumPrixOfArrays($items));
-                array_push($margeBrut, $this->sumMargeOfArray($items));
+                $revenuMensuel[] = $this->sumPrixOfArrays($items);
+                $margeBrut[] = $this->sumMargeOfArray($items);
             } else {
                 if (($i + $this->currentMonth)%12 == 0 ) {
                     $yearPassed = true;
                 }
                 $items = $this->reservations->findReservationsByMonth((int)$this->currentYear + 1,$this->currentMonth+$i);
-                array_push($revenuMensuel, $this->sumPrixOfArrays($items));
-                array_push($margeBrut, $this->sumMargeOfArray($items));
+                $revenuMensuel[] = $this->sumPrixOfArrays($items);
+                $margeBrut[] = $this->sumMargeOfArray($items);
             }
         }
 
         $revenuChart = $this->chartBuilder->createChart(Chart::TYPE_LINE)
             ->setData([
-            'labels' => $this->months,
-            'datasets' => [
-                [
-                    'label' => 'revenu mensuel (en €)',
-                    'backgroundColor' => 'rgb(255, 99, 132, .4)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => $revenuMensuel,
-                    'tension' => 0.4,
+                'labels' => $this->months,
+                'datasets' => [
+                    [
+                        'label' => 'revenu mensuel (en €)',
+                        'backgroundColor' => 'rgb(255, 99, 132, .4)',
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'data' => $revenuMensuel,
+                        'tension' => 0.4,
+                    ],
+                    [
+                        'label' => 'marge brut (en €)',
+                        'backgroundColor' => 'rgb(95, 69, 255, .4)',
+                        'borderColor' => 'rgb(95, 69, 255)',
+                        'data' => $margeBrut,
+                        'tension' => 0.4,
+                    ],
                 ],
-                [
-                    'label' => 'marge brut (en €)',
-                    'backgroundColor' => 'rgb(95, 69, 255, .4)',
-                    'borderColor' => 'rgb(95, 69, 255)',
-                    'data' => $margeBrut,
-                    'tension' => 0.4,
-                ],
-            ],
-        ])
+            ])
             ->setOptions([
-            'maintainAspectRatio' => false,
-        ]);
+                'maintainAspectRatio' => false,
+            ]);
 
         return $revenuChart;
     }
 
-    private function generateCouvertsChart(){
-
+    private function generateReservationCouvertsChart(){
         $couvertsChart = $this->chartBuilder->createChart(Chart::TYPE_LINE)
             ->setData([
                 'labels' => $this->days,
@@ -127,6 +131,81 @@ class PanelFinanceController extends AbstractController
                         'backgroundColor' => 'rgb(95, 69, 255, .4)',
                         'borderColor' => 'rgb(95, 69, 255)',
                         'data' => $this->reservations->averageEveningCovers(),
+                        'tension' => 0.4,
+                    ],
+                ],
+            ])
+            ->setOptions([
+                'maintainAspectRatio' => false,
+            ]);
+
+        return $couvertsChart;
+    }
+
+    private function generateEncaissementRevenuChart(){
+        $revenuMensuel = [];
+        $margeBrut = [];
+        $yearPassed = false;
+
+        for($i = 1 ; $i < 13; $i++){
+            if($yearPassed){
+                $items = $this->nonReservationEncaisses->findEncaissementsByMonth($this->currentYear,($this->currentMonth+$i)%12);
+                $revenuMensuel[] = $this->sumPrixOfArrays($items);
+                $margeBrut[] = $this->sumMargeOfArray($items);
+            } else {
+                if (($i + $this->currentMonth)%12 == 0 ) {
+                    $yearPassed = true;
+                }
+                $items = $this->nonReservationEncaisses->findEncaissementsByMonth((int)$this->currentYear + 1,$this->currentMonth+$i);
+                $revenuMensuel[] = $this->sumPrixOfArrays($items);
+                $margeBrut[] = $this->sumMargeOfArray($items);
+            }
+        }
+
+        $revenuChart = $this->chartBuilder->createChart(Chart::TYPE_LINE)
+            ->setData([
+                'labels' => $this->months,
+                'datasets' => [
+                    [
+                        'label' => 'revenu mensuel (en €)',
+                        'backgroundColor' => 'rgb(255, 99, 132, .4)',
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'data' => $revenuMensuel,
+                        'tension' => 0.4,
+                    ],
+                    [
+                        'label' => 'marge brut (en €)',
+                        'backgroundColor' => 'rgb(95, 69, 255, .4)',
+                        'borderColor' => 'rgb(95, 69, 255)',
+                        'data' => $margeBrut,
+                        'tension' => 0.4,
+                    ],
+                ],
+            ])
+            ->setOptions([
+                'maintainAspectRatio' => false,
+            ]);
+
+        return $revenuChart;
+    }
+
+    private function generateEncaissementCouvertsChart(){
+        $couvertsChart = $this->chartBuilder->createChart(Chart::TYPE_LINE)
+            ->setData([
+                'labels' => $this->days,
+                'datasets' => [
+                    [
+                        'label' => 'midi',
+                        'backgroundColor' => 'rgb(255, 99, 132, .4)',
+                        'borderColor' => 'rgb(255, 99, 132)',
+                        'data' => $this->nonReservationEncaisses->averageMorningCovers(),
+                        'tension' => 0.4,
+                    ],
+                    [
+                        'label' => 'dîner',
+                        'backgroundColor' => 'rgb(95, 69, 255, .4)',
+                        'borderColor' => 'rgb(95, 69, 255)',
+                        'data' => $this->nonReservationEncaisses->averageEveningCovers(),
                         'tension' => 0.4,
                     ],
                 ],

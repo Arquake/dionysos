@@ -10,20 +10,15 @@
 
     <div class="article-container">
 
-        {#<div class="gradient"></div>
-        <div class="main-article">
-        <img src="{{ asset('bd6c3591ce706faa7b68056b557df33d.jpg') }}" class="image-background">
-        </div>#}
-
         {# Title #}
         {% include 'title.html.twig' with {title:'Bienvenue chez Dionysos'} %}
 
 
         {# Presentation #}
-        <section class="bg-winter-hazel-100 py-12">
-            <article class="second-section-first-article flex items-center justify-center flex-wrap">
-                <img src="{{ asset('frontShop.jpg') }}" class="object-contain h-auto lg:ml-16 max-w-64 sm:max-w-sm md:max-w-lg ">
-                <div class="sm:text-xl text-sm font-medium lg:w-1/2 sm:mt-0 mt-4 sm:mr-16 sm:mx-0 mx-3 lg:ml-8 ">
+        <section class="bg-winter-hazel-100 p-4">
+            <article class="items-center justify-center grid grid-cols-8 gap-8">
+                <img src="{{ asset('frontShop.jpg') }}" alt="façade du restaurant" class="object-contain lg:col-span-4 lg:col-start-1 col-start-2 col-span-6 rounded shadow-md">
+                <div class="xl:text-xl text-base font-medium lg:col-span-4 col-span-8 col-start-1">
 
                     Le label <a href="https://www.economie.gouv.fr/entreprises/fait-maison#" class="text-red-800 hover:decoration-2 hover:underline hover:underline-offset-7">"Fait Maison"</a> est sorti et nous en sommes très heureux Chez Dionysos. <br><br>
 
@@ -39,15 +34,20 @@
             </article>
         </section>
 
+        {# gradient #}
+        <section class="bg-gradient-to-b from-winter-hazel-100 to-winter-hazel-300 h-8"></section>
+
 
         {# Carousel #}
-        <section class="bg-winter-hazel-300 py-12">
+        <section class="bg-winter-hazel-300 py-8">
             {% include 'home/carousel.html.twig' %}
         </section>
 
+        {# gradient #}
+        <section class="bg-gradient-to-b from-winter-hazel-300 to-neutral-900 h-8"></section>
 
         {# Map#}
-        <section class="flex flex-wrap py-12 bg-neutral-900 items-center justify-center md:gap-28 gap-12">
+        <section class="flex flex-wrap py-8 bg-neutral-900 items-center justify-center md:gap-28 gap-12">
             <div class="md:text-xl text-sm md:px-0 px-8 text-winter-hazel-50">
                 Retrouvez nous au : 1 rue du Tabour 45000 ORLEANS ! <br><br>
                 Du Mardi au Samedi <br><br>

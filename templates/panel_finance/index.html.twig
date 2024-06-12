@@ -7,37 +7,39 @@
 <div>
     {% include 'staffNavBar.html.twig' %}
 
-    <div id="menu" class="p-16 bg-blue-50 grid grid-cols-12 gap-10">
-        <div class="col-span-5 bg-white shadow-md rounded p-8 pb-10">
-            <div class="h-64">
-                <legend class="mb-4">Revenus des réservations</legend>
-                {{ render_chart(revenu_chart) }}
+    <div id="menu" class="p-16 bg-blue-50 min-h-screen">
+        <div class="grid grid-cols-12 gap-10">
+            <div class="lg:col-end-7 sm:col-end-13 col-start-1 bg-white shadow-md rounded p-8 pb-10">
+                <div class="h-64 mb-4">
+                    <legend class="mb-4">Revenus des réservations</legend>
+                    {{ render_chart(revenu_reservation_chart) }}
+                </div>
+
+            </div>
+
+            <div class="col-end-13 lg:col-start-7 col-start-1 bg-white shadow-md rounded p-8 pb-10">
+                <div class="h-64 mb-4">
+                    <legend class="mb-4">Couverts des réservations</legend>
+                    {{ render_chart(couverts_reservation_chart) }}
+                </div>
+            </div>
+
+            <div class="lg:col-end-7 sm:col-end-13 col-start-1 bg-white shadow-md rounded p-8 pb-10">
+                <div class="h-64 mb-4">
+                    <legend class="mb-4">Revenus des non-réservations</legend>
+                    {{ render_chart(revenu_encaissement_chart) }}
+                </div>
+
+            </div>
+
+            <div class="col-end-13 lg:col-start-7 col-start-1 bg-white shadow-md rounded p-8 pb-10">
+                <div class="h-64 mb-4">
+                    <legend class="mb-4">Couverts des non-réservations</legend>
+                    {{ render_chart(couverts_encaissement_chart) }}
+                </div>
             </div>
 
         </div>
-
-        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8 pb-10">
-            <div class="h-64">
-                <legend class="mb-4">Couverts des réservations</legend>
-                {{ render_chart(couverts_chart) }}
-            </div>
-        </div>
-
-        <div class="col-span-5 bg-white shadow-md rounded p-8 pb-10">
-            <div class="h-64">
-                <legend class="mb-4">Revenus des non-réservations</legend>
-                {{ render_chart(revenu_chart) }}
-            </div>
-
-        </div>
-
-        <div class="col-start-8 col-span-5 bg-white shadow-md rounded p-8 pb-10">
-            <div class="h-64">
-                <legend class="mb-4">Couverts des non-réservations</legend>
-                {{ render_chart(couverts_chart) }}
-            </div>
-        </div>
-
     </div>
 
 </div>

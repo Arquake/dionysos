@@ -23,7 +23,7 @@ dateFermer = []
 const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 const month = ['Jan','Fev','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Dec',]
 
-today = (new Date).getFullYear()+"-"+(((new Date).getMonth()+1).toString())+"-"+((new Date).getDate())
+var today = (new Date).getFullYear()+"-"+(((new Date).getMonth()+1).toString())+"-"+((new Date).getDate())
 
 function reserverPartUn(){
     data = new FormData(reservationForm)

@@ -10,33 +10,30 @@
             <div class="grid grid-cols-5 text-white">
 
                 <div class="lg:col-start-2 lg:col-span-3 col-span-full bg-slate-600 rounded-lg p-8">
-                    <div class="mb-6 text-lg">Réservation n°{{ reservation.idReservation }}</div>
+                    <div class="mb-6 text-lg">Encaissement n°{{ encaissement.id }}</div>
 
                     <div class="grid grid-cols-4 gap-4 mb-8">
-                        <div class="py-2 col-span-4">{{ reservation.nom }} {{ reservation.prenom }}</div>
-                        <div class="py-2 col-span-4 lg:col-span-2">email : {{ reservation.email }}</div>
-                        <div class="py-2 col-span-4 lg:col-span-2">téléphone : {{ reservation.telephone }}</div>
-                        <div class="py-2 col-span-4 xl:col-span-2">date de reservation : {{ reservation.dateReservation | date('d-m-Y') }} {{ reservation.horraire | date('h:i') }}</div>
-                        <div class="py-2 col-span-4 xl:col-span-2">date du règlement : {{ reservation.date | date('d-m-Y') }}</div>
-                        <div class="py-2 col-span-4">nombre de couverts : {{ reservation.couverts }}</div>
+                        <div class="py-2 col-span-4">couverts : {{ encaissement.couverts }}</div>
+                        <div class="py-2 col-span-2">Crénau : {% if encaissement.midi %} Midi {% else %} Dîner {% endif %}</div>
+                        <div class="py-2 col-span-2">date du règlement : {{ encaissement.date | date('d-m-Y') }}</div>
                     </div>
 
                     <div class="divide-y-2">
                         <div class="p-2 grid grid-cols-8">
-                            <div class="col-span-4 2xl:col-span-5">Article</div>
+                            <div class="col-span-4 2xl:col-span-6">Article</div>
                             <div class="col-span-2 2xl:col-span-1">Quantité</div>
                             <div class="col-span-2 2xl:col-span-1">Prix Unitaire</div>
                         </div>
-                        {% for item in reservation.articles %}
+                        {% for item in encaissement.article %}
                             <div class="p-2 grid grid-cols-8">
-                                <div class="col-span-4 2xl:col-span-5 overflow-hidden">{{ item.nom }}</div>
+                                <div class="col-span-4 2xl:col-span-6">{{ item.nom }}</div>
                                 <div class="col-span-2 2xl:col-span-1">{{ item.quantite }}</div>
                                 <div class="col-span-2 2xl:col-span-1">{{ item.prix }} €</div>
                             </div>
                         {% endfor %}
                         <div class="p-2 grid grid-cols-8">
                             <div class="col-span-7">Total</div>
-                            <div class="col-span-1">{{ reservation.total }} €</div>
+                            <div class="col-span-1">{{ encaissement.total }} €</div>
                         </div>
                     </div>
 

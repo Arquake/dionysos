@@ -6,48 +6,55 @@
 
 <div>
     {% include 'staffNavBar.html.twig' %}
+    <div class="bg-blue-50 p-8 min-h-screen">
 
-    <div class="bg-blue-50 p-8 h-screen">
+        {% if deleted %}
+            <div class="grid grid-cols-3">
+                <div class="border-2 border-green-400 bg-green-200 text-green-500 mt-8 rounded font-normal p-4 col-span-1 col-start-2">
+                    Suppression Effectué
+                </div>
+            </div>
+        {% endif %}
 
-        <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
-            <form class="grid grid-cols-8 gap-8 items-center">
-                <legend class="text-lg tracking-wide basis-1/2 col-span-1">Encaissement hors réservation</legend>
+        <div class="py-4 px-8 w-full bg-white rounded-xl mt-8 h-min shadow-md">
+            <form class="grid grid-cols-8 gap-8 items-center" method="post" action="/encaisser">
+                <legend class="lg:tracking-wide tracking-tight basis-1/2 md:col-span-3 md:col-span-5 sm:col-span-4 sm:text-lg text-base">Encaissement hors réservation</legend>
 
-                <input type="submit" value="Encaisser" class="bg-blue-500 p-2 rounded-lg text-white text-center col-span-1">
+                <input type="submit" value="Encaisser" class="bg-blue-500 p-2 rounded-lg text-white text-center sm:col-span-3">
             </form>
         </div>
 
         {% if reservations_futur | length > 0 %}
-            <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
+            <div class="py-4 px-8 w-full bg-white rounded-xl mt-8 h-min shadow-md">
                 <legend class="text-lg tracking-wide basis-1/2">Gérer les réservations</legend>
 
-                <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
+                <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full max-h-96 md:text-base text-xs">
                     {% for item in reservations_futur %}
-                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
-                            <div class="col-span-2 font-normal overflow-hidden">
+                        <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-x-8 gap-y-4 2xl:grid-rows-1 grid-rows-2">
+                            <div class="col-span-2 font-normal overflow-hidden row-span-1 row-start-1">
                                 {{item.civilite}} {{item.nom}} {{item.prenom}}
                             </div>
-                            <div class="col-span-1 font-normal">
+                            <div class="2xl:col-span-1 col-span-2 2xl:col-start-3 col-start-3 row-start-1 row-span-1 font-normal">
                                 {{item.date | date("d/m/Y")}} | {{item.horraire | date("H:i")}}
                             </div>
-                            <div class="flex gap-2 basis-1/4 col-span-1">
+                            <div class="flex gap-2 basis-1/4 2xl:col-span-1 col-span-2 2xl:col-start-4 col-start-5 row-start-1 row-span-1">
                                 <img alt="couverts" src="{{ asset('fork-knife-svgrepo-com.svg') }}" class="md:h-6 h-5">
-                                <span id="recap-couverts" class="md:text-base text-xs">{{item.couverts}}</span>
+                                <span id="recap-couverts" class="">{{item.couverts}}</span>
                                 <img alt="emplacement" src="{{ asset('chair-dining-svgrepo-com.svg') }}" class="md:h-6 h-5">
-                                <span id="recap-lieu" class="md:text-base text-xs">{{item.emplacement}}</span>
+                                <span id="recap-lieu" class="">{{item.emplacement}}</span>
                             </div>
-                            <div class="col-span-1 font-normal">
+                            <div class="2xl:col-span-1 lg:col-span-2 col-span-3 font-normal 2xl:row-start-1 row-start-2 2xl:col-start-5 col-start-1 row-span-1">
                                 {{item.email}}
                             </div>
-                            <div class="col-span-1 font-normal">
+                            <div class="2xl:col-span-1 lg:col-span-2 col-span-3 font-normal 2xl:row-start-1 row-start-2 2xl:col-start-6 lg:col-start-3 col-start-4 row-span-1">
                                 {{item.telephone}}
                             </div>
-                            <form method="post" action="/checkout">
-                                <button type="submit" name="gestion-reservation-checkout-id" value="{{item.id}}" class="col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Checkout</button>
+                            <form method="post" action="/checkout" class="2xl:col-span-1 col-span-2 row-start-1 col-start-7">
+                                <button type="submit" name="gestion-reservation-checkout-id" value="{{item.id}}" class="bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Encaisser</button>
                                 <input type="hidden" name="token" value="{{ csrf_token('checkout-gestion-reservation') }}">
                             </form>
-                            <form method="post" action="/panel-reservation">
-                                <button type="submit" name="gestion-reservation-submit-suppression" value="{{item.id}}" class="col-span-1 bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
+                            <form method="post" action="/panel-reservation" class="2xl:col-span-1 col-span-2 2xl:row-start-1 row-start-2 2xl:col-start-8 col-start-7">
+                                <button type="submit" name="gestion-reservation-submit-suppression" value="{{item.id}}" class="bg-red-500 py-2 px-4 rounded-lg text-white text-center w-full">Supprimer</button>
                                 <input type="hidden" name="token" value="{{ csrf_token('gestion-articles') }}">
                             </form>
                         </div>
@@ -58,20 +65,48 @@
         {% endif %}
         {% if reservations_passe | length > 0 %}
             {% if is_granted('ROLE_ADMIN') %}
-                <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min">
+                <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min shadow-md">
                     <legend class="text-lg tracking-wide basis-1/2">Réservations passés</legend>
 
                     <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
                         {% for item in reservations_passe %}
                             <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
-                                <div class="col-span-1 font-normal">
+                                <div class="col-span-2 font-normal">
                                     id : {{item.idReservation}}
                                 </div>
-                                <div class="col-span-6 font-normal overflow-hidden">
+                                <div class="col-span-4 font-normal overflow-hidden">
                                     {{item.nom}} {{item.prenom}}
                                 </div>
-                                <form method="post" action="/visualisation-reservation-passe">
-                                    <button type="submit" name="gestion-visualisation-past" value="{{item.id}}" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full">Visualiser</button>
+                                <form method="post" action="/visualisation-reservation-passe" class="col-span-2">
+                                    <button type="submit" name="gestion-visualisation-past" value="{{item.id}}" class="bg-blue-500 py-2 px-2 rounded-lg text-white text-center w-full md:text-base text-sm">Visualiser</button>
+                                    <input type="hidden" name="token" value="{{ csrf_token('visualisation-past-reservation') }}">
+                                </form>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            {% endif %}
+        {% endif %}
+
+        {# Encaissement hors réservation #}
+
+        {% if encaissement_passe | length > 0 %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="py-4 px-8 w-full bg-white rounded-xl md:mt-8 h-min shadow-md">
+                    <legend class="text-lg tracking-wide basis-1/2">Encaissements hors réservation passés</legend>
+
+                    <div class="overflow-auto p-4 bg-gray-200 mt-2 rounded h-full">
+                        {% for item in encaissement_passe %}
+                            <div class="p-2 px-4 bg-white shadow-sm my-4 grid grid-cols-8 items-center rounded gap-8">
+                                <div class="col-span-2 font-normal">
+                                    id : {{item.id}}
+                                </div>
+                                <div class="col-span-4 font-normal overflow-hidden">
+                                    {{item.date | date('d/m/Y')}} | {% if item.midi %} Midi {% else %} Dîner {% endif %}
+                                </div>
+                                <form method="post" action="/encaisser-visualisation" class="col-span-2">
+                                    <button type="submit" name="gestion-visualisation-encaissement" value="{{item.id}}" class="bg-blue-500 py-2 px-2 rounded-lg text-white text-center w-full md:text-base text-sm">Visualiser</button>
                                     <input type="hidden" name="token" value="{{ csrf_token('visualisation-past-reservation') }}">
                                 </form>
                             </div>

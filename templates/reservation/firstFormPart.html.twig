@@ -10,17 +10,16 @@
     {% endif %}
 {% endif %}
 
-<div class="flex flex-wrap mt-8 pb-8">
-    <label for="" class="item-label text-left text-3xl text-neutral-900">Nombres de couverts</label>
-    <div class="flex flex-row lg:gap-4 gap-2 pl-4 w-full py-3"> 
-        <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked required>
-        <label for="couvert-1" class="select-none duration-300 md:p-5 p-2 w-1/12 rounded-lg md:text-base text-xs text-center">1</label>
-        
-        {% for i in 2..8 %}
-            <input type="radio" name="couverts" class="couverts hidden" id="couvert-{{ i }}" value="{{i}}">
-            <label for="couvert-{{ i }}" class="select-none duration-300 md:p-5 p-2 w-1/12 rounded-lg md:text-base text-xs text-center">{{ i }}</label>
-        {% endfor %}
-    </div>
+<div class="grid grid-cols-8 lg:gap-4 gap-6 mt-8 pb-8">
+    <label for="" class="item-label text-left text-3xl text-neutral-900 col-span-8">Nombres de couverts</label>
+
+    <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked required>
+    <label for="couvert-1" class="select-none duration-300 p-2 lg:p-4 col-span-1 rounded-lg md:text-base text-xs text-center">1</label>
+
+    {% for i in 2..8 %}
+        <input type="radio" name="couverts" class="couverts hidden" id="couvert-{{ i }}" value="{{i}}">
+        <label for="couvert-{{ i }}" class="select-none duration-300 p-2 lg:p-4 col-span-1 rounded-lg md:text-base text-xs text-center">{{ i }}</label>
+    {% endfor %}
 </div>
 
 <div class="flex flex-wrap pb-8">

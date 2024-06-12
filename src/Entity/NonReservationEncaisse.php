@@ -23,14 +23,14 @@ class NonReservationEncaisse
     #[ORM\Column]
     private ?int $couverts = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $horraire = null;
-
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $total = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $marge = null;
+
+    #[ORM\Column]
+    private ?bool $midi = null;
 
     public function getId(): ?int
     {
@@ -73,18 +73,6 @@ class NonReservationEncaisse
         return $this;
     }
 
-    public function getHorraire(): ?\DateTimeInterface
-    {
-        return $this->horraire;
-    }
-
-    public function setHorraire(\DateTimeInterface $horraire): static
-    {
-        $this->horraire = $horraire;
-
-        return $this;
-    }
-
     public function getTotal(): ?string
     {
         return $this->total;
@@ -105,6 +93,18 @@ class NonReservationEncaisse
     public function setMarge(string $marge): static
     {
         $this->marge = $marge;
+
+        return $this;
+    }
+
+    public function isMidi(): ?bool
+    {
+        return $this->midi;
+    }
+
+    public function setMidi(bool $midi): static
+    {
+        $this->midi = $midi;
 
         return $this;
     }

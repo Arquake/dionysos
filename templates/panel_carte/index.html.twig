@@ -7,16 +7,15 @@
 <div>
     {% include 'staffNavBar.html.twig' %}
 
-    <div class="grid grid-cols-5 mt-12 text-white">
-
-        <div class="col-start-2 col-span-3 bg-slate-600 rounded-lg p-8 shadow-md">
+    <div class="bg-blue-50 p-8 min-h-screen">
+        <div class="col-start-2 2xl:col-span-3 col-span-6 bg-slate-600 rounded-lg p-8 shadow-md text-white">
             <div class="mb-6 col-span-6 text-center text-5xl pt-8 pb-4">Carte</div>
 
             <div class="divide-y-2">
                 <div class="p-2 grid grid-cols-8">
-                    <div class="col-span-6">Article</div>
-                    <div class="col-span-1">Quantité</div>
-                    <div class="col-span-1">Prix Unitaire</div>
+                    <div class="xl:col-span-6 col-span-5 lg:col-span-5">Article</div>
+                    <div class="xl:col-span-1 col-span-2 md:col-span-1 lg:col-span-2">Quantité</div>
+                    <div class="xl:col-span-1 col-span-2 md:col-span-2 lg:col-span-1" >Prix Unitaire</div>
                 </div>
                 <div class="col-span-6"></div>
             {% set currentCategory = null %}
@@ -31,9 +30,9 @@
 
                 {% endif %}
                     <div class="p-2 grid grid-cols-8">
-                        <div class="col-span-6">{{ item.nom }}</div>
-                        <div class="col-span-1">{{ item.quantite }}</div>
-                        <div class="col-span-1">{{ item.prix }} €</div>
+                        <div class="xl:col-span-6 col-span-4 md:col-span-5 lg:col-span-5">{{ item.nom }}</div>
+                        <div class="xl:col-span-1 col-span-2 md:col-span-1 lg:col-span-2">{{ item.quantite }}</div>
+                        <div class="xl:col-span-1 col-span-2 md:col-span-2 lg:col-span-1">{{ item.prix }} €</div>
                     </div>
             {% endfor %}
             </div>

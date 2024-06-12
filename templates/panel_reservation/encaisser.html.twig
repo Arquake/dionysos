@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dionysos - Checkout{% endblock %}
+
+{% block body %}
+
+    <div>
+        {% include 'staffNavBar.html.twig' %}
+    <div class="min-h-screen p-8 bg-blue-50">
+        <form method="post" id="form-articles" action="/panel-reservation">
+            <legend class="ml-8 mt-4 text-xl">Encaissement</legend>
+            <div class="m-8 p-8 shadow-md rounded-lg">
+                <div class=" grid grid-cols-5 gap-y-12">
+                    <div class="col-span-3 row-span-2">
+                        Nombre de couverts :
+                        <input required type="number" step="1" min="1" value="1" name="couverts" class="w-1/5 border-0 px-4 py-2 font-normal border-b-2 border-gray-200 bg-gray-100 radius-xl md:text-sm text-xs [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+                    </div>
+                    <div class="col-span-2 row-span-2">Créneau :
+                        <select class="rounded-lg font-normal p-2 border-0 bg-gray-100" name="select-value">
+                            <option value="matin">Midi</option>
+                            <option value="soir">Dîner</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <legend class="ml-8 mt-4 text-xl">Articles Achetés</legend>
+            <div class="m-8 mt-4 p-8 shadow-md rounded-lg bg-slate-600 grid grid-cols-10 gap-12">
+
+
+                <div class="col-span-10">
+                    <p class="text-white mb-2">Articles Commandés</p>
+                    <div class="bg-white rounded p-4 grid grid-cols-8 text-left" id="liste-commandes">
+                        <div class="col-span-3 lg:col-span-5 p-2">Article</div>
+                        <div class="col-span-2 lg:col-span-1 p-2">Quantité</div>
+                        <div class="col-span-1 p-2">prix</div>
+                        <div class="col-span-2 lg:col-span-1 p-2">suppression</div>
+                    </div>
+                </div>
+
+                <div class="col-span-10">
+                    <p class="text-white">Listes des Articles</p>
+                    <div class="mt-4">
+                        <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0">
+                            <option value="null">-- Choisissez une option --</option>
+                            {% set currentCategory = null %}
+                            {% for item in carte %}
+                            {% set closeOpt = false %}
+                            {% if item.categorie != currentCategory %}
+                            {% set closeOpt = true %}
+                            {% set currentCategory = item.categorie %}
+                            <optgroup label="{{ currentCategory }}">
+
+                                {% endif %}
+                                <option value="{{ item.id }}">{{ item.nom }}</option>
+                                {% endfor %}
+
+                            </optgroup>
+                        </select>
+
+                    </div>
+                    <div class="grid grid-cols-3 pt-8">
+                        <button id="ajout-article" class="col-span-1 bg-blue-500 py-2 px-4 rounded-lg text-white text-center w-full active:bg-blue-600 duration-150">Ajouter l'article</button>
+                        <input type="hidden" name="token" value="{{ csrf_token('checkout-non-reservation') }}">
+                        <button type="submit" id="checkout-validation" name="checkout-validation" value="valider" class="col-start-3 col-span-1 bg-green-500 py-2 px-4 rounded-lg text-white text-center w-full">Valider</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script src="{{asset('js/checkoutForm.js')}}"></script>
+    <script>
+        {% for item in carte %}
+            articlesList['{{ item.id }}'] = {'nom':"{{ item.nom|e('js') }}",'prix':"{{ item.prix }}"};
+        {% endfor %}
+    </script>
+
+{% endblock %}

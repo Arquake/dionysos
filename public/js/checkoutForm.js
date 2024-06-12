@@ -23,7 +23,8 @@ currentListOfArticle = {};
 
 
 (document.getElementById("checkout-validation")).addEventListener("click", (e) => {
-    if(Object.keys(currentListOfArticle).length != 0){
+    console.log(currentListOfArticle);
+    if((Object.keys(currentListOfArticle)).length !== 0){
         for(item in currentListOfArticle) {
             itemElement = document.createElement('input');
             itemElement.className = 'hidden';
@@ -65,19 +66,19 @@ function increaseQuantityElement(element,articleListElement) {
 
 function createLineArticles(value){
     itemNameElement = document.createElement('div');
-    itemNameElement.className = 'col-span-5 p-2 mt-2';
+    itemNameElement.className = 'col-span-3 lg:col-span-5 p-2 mt-2';
     itemNameElement.textContent = articlesList[value].nom;
 
     quantityElement = document.createElement('div');
-    quantityElement.className = 'col-span-1 col-start-6 p-2 mt-2';
+    quantityElement.className = 'col-span-2 lg:col-span-1 p-2 mt-2';
     quantityElement.textContent = 1;
 
     priceElement = document.createElement('div');
-    priceElement.className = 'col-span-1 col-start-7 p-2 mt-2';
+    priceElement.className = 'col-span-1 p-2 mt-2';
     priceElement.textContent = articlesList[value].prix;
 
     delButtonElement = document.createElement('button');
-    delButtonElement.className = 'col-span-1 col-start-8 p-2 bg-red-500 text-white rounded-md mt-2 active:bg-red-600 duration-150';
+    delButtonElement.className = 'col-span-2 lg:col-span-1 p-2 bg-red-500 text-white rounded-md mt-2 active:bg-red-600 duration-150';
     delButtonElement.textContent = 'retirer';
     delButtonElement.value = value;
     addListenerOndelButton(delButtonElement)
