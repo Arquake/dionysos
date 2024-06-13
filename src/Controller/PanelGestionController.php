@@ -8,6 +8,9 @@ use App\Entity\Carte;
 use App\Repository\CalendarRepository;
 use App\Repository\CarteRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\NonReservationEncaisseRepository;
+use App\Repository\ReservationEncaisseRepository;
+use App\Repository\ReservationRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +22,25 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted("ROLE_ADMIN")]
 class PanelGestionController extends AbstractController
 {
+    public function __construct(EntityManagerInterface $em, CalendarRepository $calendar, ReservationRepository $reservation, NonReservationEncaisseRepository $nonReservationEncaisseRepository, ReservationEncaisseRepository $reservationEncaisseRepository){
+        $res = $calendar->findBeforeToday();
+        foreach ( $res as $value){
+            $em->remove($value);
+        }
+        $res = $nonReservationEncaisseRepository->findOlderThanFourYears();
+        foreach ( $res as $value){
+            $em->remove($value);
+        }
+        $res = $reservationEncaisseRepository->findOlderThanFourYears();
+        foreach ( $res as $value){
+            $em->remove($value);
+        }
+        $res = $reservation->findAtLeastOneDayBeforeToday();
+        foreach ( $res as $value){
+            $em->remove($value);
+        }
+        $em->flush();
+    }
     #[Route('/panel-gestion', name: 'app_panel_gestion', methods: ['GET'])]
     public function index(CalendarRepository $calendar, CategoryRepository $category, CarteRepository $carte): Response
     {

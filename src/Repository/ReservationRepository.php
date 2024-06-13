@@ -33,41 +33,16 @@ class ReservationRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-    /**
-     * @return Reservation[]
-     */
-    public function findByDateBefore(string $date): array{
+    public function findAtLeastOneDayBeforeToday(): array
+    {
+        $today = new \DateTime();
+        $today->setTime(0, 0, 0);
 
-        return $this->createQueryBuilder('r')
-        ->where('r.date < :date')
-        ->orderBy('r.date', 'ASC')
-        ->setParameter('date', $date)
-        ->getQuery()
-        ->getResult();
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.date < :today')
+            ->setParameter('today', $today)
+            ->orderBy('e.date', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
-
-    //    /**
-    //     * @return Reservation[] Returns an array of Reservation objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Reservation
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

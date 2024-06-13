@@ -129,4 +129,18 @@ class ReservationEncaisseRepository extends ServiceEntityRepository
 
         return $results;
     }
+
+    public function findOlderThanFourYears(): array
+    {
+        $fourYearsAgo = new \DateTime();
+        $fourYearsAgo->modify('-4 years');
+        $fourYearsAgo->setTime(0, 0, 0);
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.date < :fourYearsAgo')
+            ->setParameter('fourYearsAgo', $fourYearsAgo)
+            ->orderBy('e.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -21,31 +21,6 @@ class NonReservationEncaisseRepository extends ServiceEntityRepository
         parent::__construct($registry, NonReservationEncaisse::class);
     }
 
-    //    /**
-    //     * @return NonReservationEncaisse[] Returns an array of NonReservationEncaisse objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('n.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?NonReservationEncaisse
-    //    {
-    //        return $this->createQueryBuilder('n')
-    //            ->andWhere('n.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
-
     public function orderByDate() {
         return $this->createQueryBuilder('r')
             ->OrderBy('r.date', 'ASC')
@@ -116,5 +91,19 @@ class NonReservationEncaisseRepository extends ServiceEntityRepository
         }
 
         return $results;
+    }
+
+    public function findOlderThanFourYears(): array
+    {
+        $fourYearsAgo = new \DateTime();
+        $fourYearsAgo->modify('-4 years');
+        $fourYearsAgo->setTime(0, 0, 0);
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.date < :fourYearsAgo')
+            ->setParameter('fourYearsAgo', $fourYearsAgo)
+            ->orderBy('e.date', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
