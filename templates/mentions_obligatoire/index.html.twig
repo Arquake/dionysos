@@ -4,134 +4,151 @@
 
 {% block body %}
 
-<div class="mx-4">
-    <p class="my-4">Identité</p>
-    <div class="my-2 ml-4">
-        <p>dénomination sociale</p>
-        <p>forme juridique</p>
-        <p>montant du capital social</p>
-    </div>
-
-    <p class="my-4">coordonnées</p>
-    <div class="my-2 ml-4">
-        <p>adresse du siège social</p>
-        <p>adresse électronique</p>
-    </div>
-
-    <p class="my-4">Les mentions relatives à la propriété intellectuelle</p>
-    <div class="my-2 ml-4">
-        <p>Images svg : <a href="https://www.svgrepo.com/collection/dazzle-line-icons/">Svg Repo</a></p>
-    </div>
-
-    <p class="my-4">Mentions légales de l'hébergement du site</p>
-    <div class="my-2 ml-4">
-        <p>le nom de l’hébergeur</p>
-        <p>la raison sociale</p>
-        <p>l’adresse</p>
-        <p>le numéro de téléphone.</p>
-    </div>
-
-    <div>
-        numéro d’inscription au registre du commerce et des sociétés (RCS)<br>registre national unique des entreprises (RNE)<br>
-        numéro individuel d’identification (le numéro de TVA intracommunautaire) le cas échéant
-    </div>
-
-    <div>
-        <div>
-            identité et coordonnées de l’organisme responsable du traitement de données
-            Nom de l'organisme: Restaurant Chez Nous
-            Adresse: 123 Rue de la Gastronomie, 75001 Paris, France
-            Email: contact@restaurantcheznous.fr
-            Téléphone: +33 1 23 45 67 89
+<div class="py-12 bg-blue-50 grid grid-cols-7 font-normal">
+    <div class="bg-white shadow-md p-12 rounded-xl col-start-2 col-span-5">
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Identité</p>
+            <ul class="list-disc pl-4">
+                <li>dénomination sociale</li>
+                <li>forme juridique</li>
+                <li>montant du capital social</li>
+            </ul>
         </div>
-        <div>
-            coordonnées du délégué à la protection des données (DPO), ou d’un point de contact sur les questions de protection des données personnelles
-            Délégué à la Protection des Données (DPO): Marie Dupont
-            Email: dpo@restaurantcheznous.fr
-            Téléphone: +33 1 23 45 67 90
+
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">coordonnées</p>
+            <ul class="list-disc pl-4">
+                <li>adresse du siège social</li>
+                <li>adresse électronique</li>
+            </ul>
         </div>
-        <div>
-            Base juridique du traitement de données
 
-            Les données que nous collectons sont utilisées uniquement à des fins statistiques, telles que l'analyse des revenus générés, et pour vous contacter en cas d'annulation de réservation. Les données sont ensuite archivées pour répondre à d'éventuelles demandes légals. Le traitement de ces données repose sur les bases juridiques suivantes :
 
-            Intérêt légitime : Nous avons un intérêt légitime à traiter vos données à des fins statistiques pour analyser et améliorer nos services.
-            Exécution d'un contrat : Le traitement des données pour la gestion des annulations de réservations est nécessaire à l'exécution de nos obligations contractuelles envers vous.
-            Obligation légale : La conservation des données en vue d'un contrôle fiscal éventuel repose sur notre obligation de respecter les exigences légales et réglementaires en matière de conservation des documents comptables et fiscaux.
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Mentions relatives à la propriété intellectuelle</p>
+            <ul class="list-disc pl-4">
+                <li>Images svg : <a href="https://www.svgrepo.com/collection/dazzle-line-icons/" class="underline underline-offset-2 hover:font-bold font-normal">Svg Repo</a></li>
+            </ul>
         </div>
-        <div>
-            Finalité des données collectées
 
-            Les données que nous collectons ont pour finalité :
-
-            Statistiques internes : Analyser les revenus générés et améliorer nos services.
-            Gestion des réservations : Vous contacter en cas d'annulation de réservation.
-            Conformité légale : Archiver les données pour répondre aux exigences légales et réglementaires.
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Mentions légales de l'hébergement du site</p>
+            <ul class="list-disc pl-4">
+                <li>Nom de l’hébergeur :</li>
+                <li>Raison sociale :</li>
+                <li>Adresse :</li>
+                <li>Numéro de téléphone :</li>
+            </ul>
         </div>
-        <div>
-            Caractère obligatoire ou facultatif du recueil des données et les conséquences pour la personne en cas de non-fourniture des données
 
-            Pour effectuer une réservation sur notre site, certaines données sont obligatoires et d'autres sont facultatives. Voici les détails :
-
-            Données obligatoires :
-
-            Nombre de couverts : Nécessaire pour gérer la capacité du restaurant. Sans cette information, nous ne pouvons pas garantir la disponibilité.
-            Emplacement dans la salle : Nécessaire pour gérer la capacité du restaurant. Sans cette information, nous ne pouvons pas garantir la disponibilité.
-            Date de réservation : Essentielle pour enregistrer votre réservation à la date souhaitée. Sans cette information, nous ne pouvons pas procéder à la réservation.
-            Heure : Indispensable pour programmer votre réservation à l'heure souhaitée. Sans cette information, nous ne pouvons pas réserver de table.
-            Civilité : Utilisée pour vous adresser correctement. Sans cette information, nous ne pouvons pas finaliser la réservation.
-            Prénom : Nécessaire pour identifier votre réservation. Sans cette information, nous ne pouvons pas procéder à la réservation.
-            Nom : Nécessaire pour identifier votre réservation. Sans cette information, nous ne pouvons pas procéder à la réservation.
-            Numéro de téléphone : Utilisé pour vous contacter en cas de modification ou d'annulation de votre réservation. Sans cette information, nous ne pouvons pas finaliser la réservation.
-            Email : Utilisé pour envoyer une confirmation de réservation et toute communication nécessaire. Sans cette information, nous ne pouvons pas finaliser la réservation.
-
-            Données facultatives :
-
-            Commentaire (facultatif tel que les allergies) : Informations supplémentaires pour améliorer votre expérience. Sans cette information, nous ne pouvons pas tenir compte de vos préférences ou besoins particuliers.
+        <div class="mb-8">
+            <ul class="list-disc pl-4">
+                <li>numéro d’inscription au registre du commerce et des sociétés (RCS)</li>
+                <li>registre national unique des entreprises (RNE)</li>
+                <li>numéro individuel d’identification (le numéro de TVA intracommunautaire) le cas échéant</li>
+            </ul>
         </div>
-        <div>
-            Destinataires des données personnelles
 
-            Les données personnelles que vous nous fournissez lors de votre réservation sont strictement destinées à être utilisées par notre équipe interne, comprenant les employés et le chef du restaurant. Ces informations sont nécessaires pour assurer la gestion efficace de nos services et garantir une expérience agréable lors de votre visite.
-
-            En aucun cas, vos données ne seront partagées avec des tiers ou utilisées à d'autres fins que celles explicitement mentionnées ci-dessus.
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">identité et coordonnées de l’organisme responsable du traitement de données</p>
+            <ul class="list-disc pl-4">
+                <li>Nom de l'organisme: nom</li>
+                <li>Adresse: adresse</li>
+                <li>Email: email</li>
+                <li>Téléphone: +33 1 23 45 67 89</li>
+            </ul>
         </div>
-        <div>
-            Durée de conservation des données personnelles
-
-            Nous conservons les données personnelles que vous nous fournissez lors de votre réservation pour une période de 4 ans, sauf indication contraire pour les commentaires spécifiques. Voici les détails :
-
-            Données de réservation (nombre de couverts, date, heure, emplacement dans la salle) : Ces informations seront conservées pendant 4 ans après votre dernière réservation. Cela nous permet de gérer efficacement nos opérations et de répondre à vos besoins lors de futures visites.
-
-            Données d'identification (civilité, prénom, nom, numéro de téléphone, email) : Ces informations seront également conservées pour une durée de 4 ans après votre dernière réservation. Elles sont nécessaires pour vous contacter en cas de besoin et pour assurer un suivi de qualité de notre service.
-
-            En cas de contrôle fiscal ou pour répondre à d'autres obligations légales, nous pourrions être amenés à conserver certaines données plus longtemps. Nous nous engageons à protéger vos données personnelles et à les traiter avec le plus grand soin et respect de la confidentialité.
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">coordonnées du délégué à la protection des données (DPO), ou d’un point de contact sur les questions de protection des données personnelles</p>
+            <ul class="list-disc pl-4">
+                <li>Délégué à la Protection des Données (DPO): Prénom Nom</li>
+                <li>Email: email</li>
+                <li>Téléphone: +33 1 23 45 67 90</li>
+            </ul>
         </div>
-        <div>
-            Droits de l’internaute
+        <div class="mb-8">
 
-            Vous disposez des droits suivants concernant vos données personnelles que nous collectons lors de votre réservation :
-
-            Droit d'accès: Vous avez le droit d'obtenir la confirmation que des données personnelles vous concernant sont ou ne sont pas traitées, ainsi que d'accéder à ces données et d'obtenir des informations complémentaires.
-
-            Droit de rectification: Vous pouvez demander la rectification de vos données personnelles si elles sont inexactes ou incomplètes.
-
-            Droit d'effacement (droit à l'oubli): Vous avez le droit de demander la suppression de vos données personnelles lorsque celles-ci ne sont plus nécessaires au regard des finalités pour lesquelles elles ont été collectées, ou lorsque vous retirez votre consentement sur lequel le traitement est basé.
-
-            Droit de limitation du traitement: Vous pouvez demander la limitation du traitement de vos données personnelles dans certaines circonstances, par exemple si vous contestez l'exactitude de vos données personnelles ou si vous vous opposez au traitement.
-
-            Droit à la portabilité des données: Vous avez le droit de recevoir les données personnelles que vous nous avez fournies dans un format structuré, couramment utilisé et lisible par machine, et avez le droit de transmettre ces données à un autre responsable du traitement, lorsque cela est techniquement possible.
-
-            Droit d'opposition: Vous avez le droit de vous opposer, pour des raisons tenant à votre situation particulière, au traitement de vos données personnelles. Nous cesserons alors de traiter vos données, à moins que des motifs légitimes et impérieux pour le traitement ne prévalent sur vos intérêts, droits et libertés, ou que le traitement ne soit nécessaire pour l'établissement, l'exercice ou la défense de droits en justice.
-
-            Veuillez noter que certaines données personnelles que nous collectons sont nécessaires pour respecter nos obligations légales, notamment en cas de contrôle fiscal. Par conséquent, ces données ne peuvent pas être supprimées sur demande. Cependant, vous pouvez exercer vos droits en nous contactant à tout moment. Nous traiterons votre demande dans les meilleurs délais et conformément à la réglementation en vigueur.
-
-            Pour exercer vos droits ou pour toute question concernant la protection de vos données personnelles, veuillez nous contacter à @@@[insérer votre adresse email ou un lien vers votre formulaire de contact dédié à la protection des données]@@@.
+            <p class="text-2xl mb-1 font-medium">Base juridique du traitement de données</p>
+            <ul class="list-disc pl-4">
+                <li>Les données que nous collectons sont utilisées uniquement à des fins statistiques, telles que l'analyse des revenus générés, et pour vous contacter en cas d'annulation de réservation. Les données sont ensuite archivées pour répondre à d'éventuelles demandes légals. Le traitement de ces données repose sur les bases juridiques suivantes :</li>
+                <li>Intérêt légitime : Nous avons un intérêt légitime à traiter vos données à des fins statistiques pour analyser et améliorer nos services.</li>
+                <li>Exécution d'un contrat : Le traitement des données pour la gestion des annulations de réservations est nécessaire à l'exécution de nos obligations contractuelles envers vous.</li>
+                <li>Obligation légale : La conservation des données en vue d'un contrôle fiscal éventuel repose sur notre obligation de respecter les exigences légales et réglementaires en matière de conservation des documents comptables et fiscaux.</li>
+            </ul>
         </div>
-        <div>
-            Transfert de données à caractère personnel hors de l'Union européenne
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Finalité des données collectées</p>
+            <ul class="list-disc pl-4">
+                <li>Statistiques internes : Analyser les revenus générés et améliorer nos services.</li>
+                <li>Gestion des réservations : Vous contacter en cas d'annulation de réservation.</li>
+                <li>Conformité légale : Archiver les données pour répondre aux exigences légales et réglementaires.</li>
+            </ul>
+        </div>
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Caractère obligatoire ou facultatif du recueil des données et les conséquences pour la personne en cas de non-fourniture des données</p>
 
-            Nous vous informons qu'aucun transfert de vos données personnelles à destination d'un État n'appartenant pas à l'Union européenne n'est prévu. Toutes vos données sont traitées et stockées au sein de l'Union européenne, garantissant ainsi un niveau de protection conforme aux normes européennes en matière de confidentialité et de sécurité des données.
+            <p>Pour effectuer une réservation sur notre site, certaines données sont obligatoires et d'autres sont facultatives. Voici les détails :</p>
+            <ul class="list-disc pl-4">
+                <li>
+                    <p>Données obligatoires :</p>
+                    <ul class="list-decimal pl-4">
+                        <li>Nombre de couverts : Nécessaire pour gérer la capacité du restaurant. Sans cette information, nous ne pouvons pas garantir la disponibilité.</li>
+                        <li>Emplacement dans la salle : Nécessaire pour gérer la capacité du restaurant. Sans cette information, nous ne pouvons pas garantir la disponibilité.</li>
+                        <li>Date de réservation : Essentielle pour enregistrer votre réservation à la date souhaitée. Sans cette information, nous ne pouvons pas procéder à la réservation.</li>
+                        <li>Heure : Indispensable pour programmer votre réservation à l'heure souhaitée. Sans cette information, nous ne pouvons pas réserver de table.</li>
+                        <li>Civilité : Utilisée pour vous adresser correctement. Sans cette information, nous ne pouvons pas finaliser la réservation.</li>
+                        <li>Prénom : Nécessaire pour identifier votre réservation. Sans cette information, nous ne pouvons pas procéder à la réservation.</li>
+                        <li>Nom : Nécessaire pour identifier votre réservation. Sans cette information, nous ne pouvons pas procéder à la réservation.</li>
+                        <li>Numéro de téléphone : Utilisé pour vous contacter en cas de modification ou d'annulation de votre réservation. Sans cette information, nous ne pouvons pas finaliser la réservation.</li>
+                        <li>Email : Utilisé pour envoyer une confirmation de réservation et toute communication nécessaire. Sans cette information, nous ne pouvons pas finaliser la réservation.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <p>Données facultatives :</p>
+                    <ul class="list-decimal pl-4">
+                        <li>Commentaire (facultatif tel que les allergies) : Informations supplémentaires pour améliorer votre expérience. Sans cette information, nous ne pouvons pas tenir compte de vos préférences ou besoins particuliers.</li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Destinataires des données personnelles</p>
+            <ul class="list-disc pl-4">
+                <li>Les données personnelles que vous nous fournissez lors de votre réservation sont strictement destinées à être utilisées par notre équipe interne, comprenant les employés et le chef du restaurant. Ces informations sont nécessaires pour assurer la gestion efficace de nos services et garantir une expérience agréable lors de votre visite.</li>
+                <li>En aucun cas, vos données ne seront partagées avec des tiers ou utilisées à d'autres fins que celles explicitement mentionnées ci-dessus.</li>
+            </ul>
+        </div>
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Durée de conservation des données personnelles</p>
+            <p>Nous conservons les données personnelles que vous nous fournissez lors de votre réservation pour une période de 4 ans, sauf indication contraire pour les commentaires spécifiques. Voici les détails :</p>
+            <ul class="list-disc pl-4">
+                <li>Données de réservation (nombre de couverts, date, heure, emplacement dans la salle) : Ces informations seront conservées pendant 4 ans après votre dernière réservation. Cela nous permet de gérer efficacement nos opérations et de répondre à vos besoins lors de futures visites.</li>
+                <li>Données d'identification (civilité, prénom, nom, numéro de téléphone, email) : Ces informations seront également conservées pour une durée de 4 ans après votre dernière réservation. Elles sont nécessaires pour vous contacter en cas de besoin et pour assurer un suivi de qualité de notre service.</li>
+                <li>En cas de contrôle fiscal ou pour répondre à d'autres obligations légales, nous pourrions être amenés à conserver certaines données plus longtemps. Nous nous engageons à protéger vos données personnelles et à les traiter avec le plus grand soin et respect de la confidentialité.</li>
+            </ul>
+        </div>
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Droits de l’internaute</p>
+            <ul class="list-disc pl-4">
+                <li>Vous disposez des droits suivants concernant vos données personnelles que nous collectons lors de votre réservation :</li>
+                <li>Droit d'accès: Vous avez le droit d'obtenir la confirmation que des données personnelles vous concernant sont ou ne sont pas traitées, ainsi que d'accéder à ces données et d'obtenir des informations complémentaires.</li>
+                <li>Droit de rectification: Vous pouvez demander la rectification de vos données personnelles si elles sont inexactes ou incomplètes.</li>
+                <li>Droit d'effacement (droit à l'oubli): Vous avez le droit de demander la suppression de vos données personnelles lorsque celles-ci ne sont plus nécessaires au regard des finalités pour lesquelles elles ont été collectées, ou lorsque vous retirez votre consentement sur lequel le traitement est basé.</li>
+                <li>Droit de limitation du traitement: Vous pouvez demander la limitation du traitement de vos données personnelles dans certaines circonstances, par exemple si vous contestez l'exactitude de vos données personnelles ou si vous vous opposez au traitement.</li>
+                <li>Droit à la portabilité des données: Vous avez le droit de recevoir les données personnelles que vous nous avez fournies dans un format structuré, couramment utilisé et lisible par machine, et avez le droit de transmettre ces données à un autre responsable du traitement, lorsque cela est techniquement possible.</li>
+                <li>Droit d'opposition: Vous avez le droit de vous opposer, pour des raisons tenant à votre situation particulière, au traitement de vos données personnelles. Nous cesserons alors de traiter vos données, à moins que des motifs légitimes et impérieux pour le traitement ne prévalent sur vos intérêts, droits et libertés, ou que le traitement ne soit nécessaire pour l'établissement, l'exercice ou la défense de droits en justice.</li>
+                <li>Veuillez noter que certaines données personnelles que nous collectons sont nécessaires pour respecter nos obligations légales, notamment en cas de contrôle fiscal. Par conséquent, ces données ne peuvent pas être supprimées sur demande. Cependant, vous pouvez exercer vos droits en nous contactant à tout moment. Nous traiterons votre demande dans les meilleurs délais et conformément à la réglementation en vigueur.</li>
+                <li>Pour exercer vos droits ou pour toute question concernant la protection de vos données personnelles, veuillez nous contacter à @@@[insérer votre adresse email ou un lien vers votre formulaire de contact dédié à la protection des données]@@@.</li>
+            </ul>
+        </div>
+        <div class="mb-8">
+            <p class="text-2xl mb-1 font-medium">Transfert de données à caractère personnel hors de l'Union européenne</p>
+            <ul class="list-disc pl-4">
+                <li>Nous vous informons qu'aucun transfert de vos données personnelles à destination d'un État n'appartenant pas à l'Union européenne n'est prévu. Toutes vos données sont traitées et stockées au sein de l'Union européenne, garantissant ainsi un niveau de protection conforme aux normes européennes en matière de confidentialité et de sécurité des données.</li>
+            </ul>
         </div>
     </div>
 </div>
