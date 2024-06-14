@@ -16,12 +16,29 @@
             </div>
         {% endif %}
 
+        {% if added %}
+            <div class="grid grid-cols-3">
+                <div class="border-2 border-green-400 bg-green-200 text-green-500 mt-8 rounded font-normal p-4 col-span-1 col-start-2">
+                    Création Effectué
+                </div>
+            </div>
+        {% endif %}
+
         {# Encaissement hors réservation #}
 
         <div class="py-4 px-8 w-full bg-white rounded-xl mt-8 h-min shadow-md">
             <form class="grid grid-cols-8 gap-8 items-center" method="post" action="/encaisser">
                 <legend class="lg:tracking-wide tracking-tight basis-1/2 md:col-span-3 md:col-span-5 sm:col-span-4 sm:text-lg text-base">Encaissement hors réservation</legend>
                 <input type="submit" value="Encaisser" class="bg-blue-500 p-2 rounded-lg text-white text-center sm:col-span-3">
+            </form>
+        </div>
+
+        {# Créer une réservation #}
+
+        <div class="py-4 px-8 w-full bg-white rounded-xl mt-8 h-min shadow-md">
+            <form class="grid grid-cols-8 gap-8 items-center" method="post" action="/creation-reservation">
+                <legend class="lg:tracking-wide tracking-tight basis-1/2 md:col-span-3 md:col-span-5 sm:col-span-4 sm:text-lg text-base">Créer réservation</legend>
+                <input type="submit" value="creer" class="bg-blue-500 p-2 rounded-lg text-white text-center sm:col-span-3">
             </form>
         </div>
 

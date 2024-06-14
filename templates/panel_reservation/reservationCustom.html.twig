@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dionysos - Création Réservation{% endblock %}
+
+{% block body %}
+
+<div>
+    {% include 'staffNavBar.html.twig' %}
+    <div class="bg-blue-50 p-8 min-h-screen grid grid-cols-6">
+        <form class="bg-white rounded-md shadow-md p-8 col-start-2 col-span-4">
+            <div class="grid grid-cols-8 lg:gap-4 gap-6 mt-8 pb-8">
+                <label for="" class="item-label text-left text-3xl text-neutral-900 col-span-8">Nombres de couverts</label>
+
+                <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked required>
+                <label for="couvert-1" class="select-none duration-300 p-2 lg:p-4 col-span-1 rounded-lg md:text-base text-xs text-center">1</label>
+
+                {% for i in 2..8 %}
+                    <input type="radio" name="couverts" class="couverts hidden" id="couvert-{{ i }}" value="{{i}}">
+                    <label for="couvert-{{ i }}" class="select-none duration-300 p-2 lg:p-4 col-span-1 rounded-lg md:text-base text-xs text-center">{{ i }}</label>
+                {% endfor %}
+            </div>
+
+            <div class="flex flex-wrap pb-8">
+                <label for="salle" class="text-left text-3xl w-full text-neutral-900">Salle</label>
+                <div class=" flex flex-row gap-4 pl-4 w-full py-3">
+                    <input type="radio" name="salle" class="salle hidden" id="interieur" checked required value="intérieur">
+                    <label for="interieur" class="duration-300 p-4 rounded-lg lg:text-base text-xs text-center">Intérieur</label>
+                    <input type="radio" name="salle" class="salle hidden" id="terrasse" value="Terrasse">
+                    <label for="terrasse" class="duration-300  p-4 rounded-lg lg:text-base text-xs text-center">Terrasse COUVERTE ET CHAUFFEE</label>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap pb-8">
+                <label for="date" class="text-left text-3xl w-full text-neutral-900">Date</label>
+                <div class="pl-4 md:w-1/3 w-5/12 pt-3">
+                    <input required id="date-picker" type="date" name="date" value="{{ "now"|date("Y-m-d") }}" class="border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer lg:text-base text-xs" min="{{ "now"|date("Y-m-d") }}">
+                </div>
+            </div>
+
+            <div class="flex flex-wrap pb-8">
+                <label for="Horraire" class="text-left text-3xl w-full text-neutral-900">Horraire</label>
+                <div class="pl-4 w-1/3 pt-3">
+                    <select required name="heure" id="custom-dropdown" class="lg:text-base text-xs border-0 border-b-2 bg-inherit w-full border-neutral-900 cursor-pointer">
+                        <optgroup label="Déjeuner&nbsp">
+                            {% for i in 12..13 %}
+                                {% for j in ["00", 15, 30, 45] %}
+                                    <option>• {{ i }}:{{ j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </optgroup>
+
+                        <optgroup label="Dîner&nbsp">
+                            {% for i in 19..21 %}
+                                {% for j in ["00", 15, 30, 45] %}
+                                    <option>• {{ i }}:{{ j }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="flex flex-wrap pb-8">
+                <label for="salle" class="text-left md:text-3xl text-2xl w-full text-neutral-900 mt-4">Civilité</label>
+                <div class="flex flew-row gap-4 pl-4 w-full py-3">
+                    <div class="w-1/2">
+                        <input type="radio" name="civilite" id="Madame" checked value="Mme" checked required>
+                        <label for="Madame" class="duration-300 rounded-lg ml-2 md:text-base text-xs text-left">Madame</label>
+                    </div>
+                    <div class="w-1/2">
+                        <input type="radio" name="civilite" id="Monsieur" checked value="Mr">
+                        <label for="Monsieur" class="duration-300 rounded-lg ml-2 md:text-base text-xs text-left">Monsieur</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-wrap pb-8">
+                <div class="w-1/2">
+                    <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Prénom</label>
+                    <div class="pl-4 pt-3">
+                        <input id="" type="text" maxlength="48" name="prenom" placeholder="prenom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" required>
+                    </div>
+                </div>
+                <div class="w-1/2 pl-5">
+                    <label for="nom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Nom</label>
+                    <div class="pl-4 pt-3">
+                        <input id="" type="text" maxlength="48" name="nom" placeholder="nom ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-8">
+                <label for="numero" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Numéro</label>
+                <div class="w-2/3 flex flex-wrap">
+                    <div class="pl-4 pt-3 w-1/3">
+                        <input id="" type="number" min="1" max="999" maxlength="3" name="indicatif" placeholder="33+ ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none md:text-base text-xs">
+                    </div>
+                    <div class="pt-3 w-1/2">
+                        <input id="" type="number" min="000000001" max="999999999" maxlength="10" name="numero" placeholder="6 12 34 56 78 ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit md:w-2/3 w-full border-neutral-900 cursor-pointer [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none md:text-base text-xs" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-8">
+                <div class="w-3/4">
+                    <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Email</label>
+                    <div class="pl-4 pt-3">
+                        <input id="" type="email" name="email" placeholder="votre@email.fr ..." class="font-normal tracking-wide border-0 border-b-2 bg-inherit w-2/3 border-neutral-900 cursor-pointer md:text-base text-xs" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pb-8">
+                <div class="w-3/4">
+                    <label for="prenom" class="text-left md:text-3xl text-2xl w-full text-neutral-900">Commentaires
+                        <span class="md:text-base text-xs font-medium">&nbsp allergies et habitudes alimentaires (facultatif)</span></label>
+                    <div class="pl-4 pt-3">
+                        <textarea class="rounded resize-none w-full md:text-base text-xs" name="commentaires" rows="4" maxlength="300"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:1/3 w-2/5" id="confirmer-reservation-button">
+                <input type="submit" name="confirmer" value="Confirmer Réservation" class="md:p-5 p-2 md:px-5 px-0 md:w-full w-full rounded-lg lg:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

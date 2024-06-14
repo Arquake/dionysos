@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\NonReservationEncaisse;
 use App\Entity\ReservationEncaisse;
+use App\Repository\CalendarRepository;
 use App\Repository\CarteRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\NonReservationEncaisseRepository;
@@ -145,7 +146,6 @@ class PanelReservationController extends AbstractController
         }
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/visualisation-reservation-passe', name: 'visualisation-reservation-passe.post', methods: ['POST'])]
     public function visualisationPostIndex(Request $request): Response {
         $payload = $request->getPayload();
@@ -165,13 +165,11 @@ class PanelReservationController extends AbstractController
         ]);
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/visualisation-reservation-passe', name: 'visualisation-reservation-passe.get', methods: ['GET'])]
     public function visualisationGetIndex(): Response {
         return $this->generateError(406);
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/encaisser', name: 'encaisser.post', methods: ['POST'])]
     public function encaisserIndexPost(CarteRepository $carte, CategoryRepository $categoryRepository): Response {
         return $this->render('panel_reservation/encaisser.html.twig', [
@@ -179,14 +177,14 @@ class PanelReservationController extends AbstractController
         ]);
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/encaisser', name: 'encaisser.get', methods: ['GET'])]
     public function encaisserIndexGet(): Response {
         return $this->generateError(406);
     }
 
-    private function renderPanelReservation(bool $deleted = false): Response{
+    private function renderPanelReservation(bool $deleted = false, bool $added = false): Response{
         return $this->render('panel_reservation/index.html.twig', [
+            'added' => $added,
             'deleted' => $deleted,
             'reservations_futur' => $this->reservations->findByDateAfter(date('d-m-Y')),
             'reservations_du_jour' => $this->reservations->findTodaysReservations(),
@@ -195,18 +193,24 @@ class PanelReservationController extends AbstractController
         ]);
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/encaisser-visualisation', name: 'encaisser-visualisation.post', methods: ['POST'])]
-    public function encaisserVisualisationIndexPost(Request $request, CarteRepository $carte): Response {
+    public function encaisserVisualisationIndexPost(Request $request): Response {
         $payload = $request->getPayload();
         return $this->render('panel_reservation/visualisation_encaissement.html.twig', [
             'encaissement' => $this->nonReservation->find($payload->get('gestion-visualisation-encaissement'))
         ]);
     }
 
-    #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
-    #[Route('/encaisser-visualisation', name: 'encaisser-visualisation.get', methods: ['GET'])]
-    public function encaisserVisualisationIndexGet(): Response {
+    #[Route('/creation-reservation', name: 'creation_reservation.get', methods: ['GET'])]
+    public function creationReservationGet(): Response {
         return $this->generateError(406);
+    }
+
+    #[Route('/creation-reservation', name: 'creation_reservation.post', methods: ['POST'])]
+    public function creationReservationPost(Request $request, CalendarRepository $calendar): Response {
+        return $this->render('panel_reservation/reservationCustom.html.twig', [
+            'fermer' => $calendar->findBy(['type' => 'fermer']),
+            'ouvert' => $calendar->findBy(['type' => 'ouvert'])
+        ]);
     }
 }
