@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class CheckOutController extends AbstractController
 {
     #[Route('/checkout', name: 'app_check_out.post', methods: ['POST'])]
-    public function indexPost(Request $request, ReservationRepository $reservationRepository, CarteRepository $carte): Response
+    public function indexPost(Request $request, ReservationRepository $reservationRepository, CarteRepository $carte, CategoryRepository $categoryRepository): Response
     {
         $payload = $request->getPayload();
 
@@ -36,7 +36,7 @@ class CheckOutController extends AbstractController
 
         return $this->render('check_out/index.html.twig', [
             'reservation'=>$reservation,
-            'carte'=>$carte->findAllOrderByCategorie(),
+            'carte'=>$carte->findAllOrderByCategorie($categoryRepository->findAllSortedById()),
         ]);
 
     }

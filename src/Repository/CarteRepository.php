@@ -46,8 +46,21 @@ class CarteRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findAllOrderByCategorie(){
-        $qb = $this->createQueryBuilder('c')->orderBy('c.categorie','ASC');
-        return ($qb->getQuery()->execute());
+    public function findAllOrderByCategorie(array $sortedCategories){
+        //$qb = $this->createQueryBuilder('c')->orderBy('c.categorie','ASC');
+        // Fetch all cartes with categories
+        $cartes = $this->findAll();
+
+        $carteOrder = [];
+
+        foreach ($sortedCategories as $categoryId => $category) {
+            foreach ($cartes as $carte) {
+                if ($carte->getCategorie() === $category->getNom()) {
+                    $carteOrder[] = $carte;
+                }
+            }
+        }
+
+        return $carteOrder;
     }
 }

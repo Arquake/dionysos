@@ -20,11 +20,12 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+
     /**
      * @return Reservation[]
      */
-    public function findByDateAfter(string $date): array{
-
+    public function findByDateAfter(string $date): array
+    {
         return $this->createQueryBuilder('r')
         ->where('r.date >= :date')
         ->orderBy('r.date', 'ASC')
@@ -42,6 +43,24 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere('e.date < :today')
             ->setParameter('today', $today)
             ->orderBy('e.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findTodaysReservations(): array
+    {
+        $today = new \DateTime();
+        $today->setTime(0, 0, 0);
+
+        $tomorrow = new \DateTime();
+        $tomorrow->setTime(0, 0, 0);
+        $tomorrow->modify('+1 day');
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.date >= :today')
+            ->andWhere('e.date < :tomorrow')
+            ->setParameter('today', $today)
+            ->setParameter('tomorrow', $tomorrow)
             ->getQuery()
             ->getResult();
     }

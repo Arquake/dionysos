@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\NonReservationEncaisse;
 use App\Entity\ReservationEncaisse;
 use App\Repository\CarteRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\NonReservationEncaisseRepository;
 use App\Repository\ReservationEncaisseRepository;
 use App\Repository\ReservationRepository;
@@ -172,9 +173,9 @@ class PanelReservationController extends AbstractController
 
     #[IsGranted(new Expression('is_granted("ROLE_ADMIN")'))]
     #[Route('/encaisser', name: 'encaisser.post', methods: ['POST'])]
-    public function encaisserIndexPost(CarteRepository $carte): Response {
+    public function encaisserIndexPost(CarteRepository $carte, CategoryRepository $categoryRepository): Response {
         return $this->render('panel_reservation/encaisser.html.twig', [
-            'carte'=>$carte->findAllOrderByCategorie(),
+            'carte'=>$carte->findAllOrderByCategorie($categoryRepository->findAllSortedById()),
         ]);
     }
 
@@ -188,6 +189,7 @@ class PanelReservationController extends AbstractController
         return $this->render('panel_reservation/index.html.twig', [
             'deleted' => $deleted,
             'reservations_futur' => $this->reservations->findByDateAfter(date('d-m-Y')),
+            'reservations_du_jour' => $this->reservations->findTodaysReservations(),
             'reservations_passe' => $this->reservationEncaisse->reservationOrderedByDate(),
             'encaissement_passe' => $this->nonReservation->orderByDate(),
         ]);
