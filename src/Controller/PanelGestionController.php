@@ -22,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted("ROLE_ADMIN")]
 class PanelGestionController extends AbstractController
 {
+    private EntityManagerInterface $em;
     public function __construct(EntityManagerInterface $em, CalendarRepository $calendar, ReservationRepository $reservation, NonReservationEncaisseRepository $nonReservationEncaisseRepository, ReservationEncaisseRepository $reservationEncaisseRepository){
         $res = $calendar->findBeforeToday();
         foreach ( $res as $value){
@@ -40,6 +41,7 @@ class PanelGestionController extends AbstractController
             $em->remove($value);
         }
         $em->flush();
+        $this->em = $em;
     }
     #[Route('/panel-gestion', name: 'app_panel_gestion', methods: ['GET'])]
     public function index(CalendarRepository $calendar, CategoryRepository $category, CarteRepository $carte): Response
@@ -55,15 +57,14 @@ class PanelGestionController extends AbstractController
     }
 
     #[Route('/panel-gestion', name: 'app_panel_gestion.post', methods:['POST'])]
-    public function indexPost(Request $request, EntityManagerInterface $em, CalendarRepository $calendar, CategoryRepository $category, CarteRepository $carte): Response
+    public function indexPost(Request $request, CalendarRepository $calendar, CategoryRepository $category, CarteRepository $carte): Response
     {
-        $errorHappend = false;
         $payload = $request->getPayload();
         if($payload->get('gestion-submit-suppression') != null){
             if ($this->isCsrfTokenValid('supprimer-calendrier', $payload->get('token'))){
                 if ($calendar->findOneBy(['date' => new \DateTime($payload->get('gestion-submit-suppression'))]) != null){
-                    $em->remove($calendar->findOneBy(['date' => new \DateTime($payload->get('gestion-submit-suppression'))]));
-                    $em->flush();
+                    $this->em->remove($calendar->findOneBy(['date' => new \DateTime($payload->get('gestion-submit-suppression'))]));
+                    $this->em->flush();
                 }
             }
 
@@ -72,20 +73,19 @@ class PanelGestionController extends AbstractController
                 $carte->find($payload->get('gestion-article-prix'))
                     ->setPrix($payload->get('article-prix'))
                     ->setMarge($payload->get('article-marge'));
-                $em->flush();
+                $this->em->flush();
     
     
             }else if ($payload->get('gestion-article-quantite') != null) {
-                $object = $carte->find($payload->get('gestion-article-quantite'));
-                    $carte->find($payload->get('gestion-article-quantite'))
-                          ->setQuantite($payload->get('article-stock'));
-                    $em->flush();
+                $carte->find($payload->get('gestion-article-quantite'))
+                      ->setQuantite($payload->get('article-stock'));
+                $this->em->flush();
     
             }else if ($payload->get('gestion-article-submit-suppression') != null) {
                 $object = $carte->find($payload->get('gestion-article-submit-suppression'));
                 if ($object != null) {
-                    $em->remove($object);
-                    $em->flush();
+                    $this->em->remove($object);
+                    $this->em->flush();
                 }
     
             }
@@ -93,19 +93,19 @@ class PanelGestionController extends AbstractController
         } else if ($payload->get('gestion-submit') != null) {
             switch($payload->get('gestion-submit')){
                 case 'ajoutArticle':
-                    $this->ajouterArticle($em, $payload);
+                    $this->ajouterArticle($payload);
                     break;
 
                 case 'ajoutCategorie':
-                    $this->ajouterCategorie($em, $category, $payload);
+                    $this->ajouterCategorie($category, $payload);
                     break;
 
                 case 'ouvert':
-                    $this->ouvrir($em, $calendar, $payload);
+                    $this->ouvrir($calendar, $payload);
                     break;
 
                 case 'fermer':
-                    $this->fermer($em, $calendar, $payload);
+                    $this->fermer($calendar, $payload);
                     break;
             }
         }
@@ -114,25 +114,22 @@ class PanelGestionController extends AbstractController
             'ouvert' => $calendar->findBy(['type' => 'ouvert']),
             'fermer' => $calendar->findBy(['type' => 'fermer']),
             'articles' => $carte->findAll(),
-            'error' => $errorHappend,
         ]);
     }
 
 
-
-    private function ajouterCategorie(EntityManagerInterface $em, CategoryRepository $category, $payload){
+    private function ajouterCategorie(CategoryRepository $category, $payload): void{
         if ($this->isCsrfTokenValid('ajouter-categorie', $payload->get('token'))){
             if($category->findBy(['nom' => $payload->get('nom')]) == []){
                 $newCategory = (new Category())
                     ->setNom($payload->get('nom'));
-                $em->persist($newCategory);
-                $em->flush();
+                $this->em->persist($newCategory);
+                $this->em->flush();
             }
         }
     }
 
-
-    private function ouvrir(EntityManagerInterface $em,  CalendarRepository $calendar, $payload){
+    private function ouvrir(CalendarRepository $calendar, $payload): void{
         if ($this->isCsrfTokenValid('modifier-calendrier', $payload->get('token'))){
             if(new DateTime($payload->get('date')) >= (new DateTime('now')) && 
             $calendar->findBy(['date' => new \DateTime($payload->get('date'))]) 
@@ -140,14 +137,13 @@ class PanelGestionController extends AbstractController
                 $dateOuverture = (new Calendar())
                     ->setDate(new \DateTime($payload->get('date')))
                     ->setType('ouvert');
-                $em->persist($dateOuverture);
-                $em->flush();
+                $this->em->persist($dateOuverture);
+                $this->em->flush();
             }
         }
     }
 
-
-    private function fermer(EntityManagerInterface $em,  CalendarRepository $calendar, $payload){
+    private function fermer(CalendarRepository $calendar, $payload): void{
         if ($this->isCsrfTokenValid('modifier-calendrier', $payload->get('token'))){
             if(new DateTime($payload->get('date')) >= (new DateTime('now')) && 
             $calendar->findBy(['date' => new \DateTime($payload->get('date'))]) 
@@ -155,14 +151,13 @@ class PanelGestionController extends AbstractController
                 $dateOuverture = (new Calendar())
                     ->setDate(new \DateTime($payload->get('date')))
                     ->setType('fermer');
-                $em->persist($dateOuverture);
-                $em->flush();
+                $this->em->persist($dateOuverture);
+                $this->em->flush();
             }
         }
     }
 
-
-    private function ajouterArticle(EntityManagerInterface $em, $payload){
+    private function ajouterArticle($payload): void{
         if ($this->isCsrfTokenValid('ajouter-article', $payload->get('token'))){
             $newArticle = (new Carte())
                 ->setNom($payload->get('nom'))
@@ -170,8 +165,8 @@ class PanelGestionController extends AbstractController
                 ->setMarge($payload->get('marge'))
                 ->setCategorie($payload->get('categorie'))
                 ->setQuantite($payload->get('stock'));
-            $em->persist($newArticle);
-            $em->flush();
+            $this->em->persist($newArticle);
+            $this->em->flush();
         }
     }
 }

@@ -26,7 +26,7 @@
 
                     {% if reservation.comments != '' %}
                         <div class="col-span-4 row-span-1 row-start-4">Commentaire
-                            <div class="bg-slate-300 shadow rounded p-4 whitespace-normal">
+                            <div class="bg-slate-200 shadow rounded p-4 whitespace-normal">
                                 {{ reservation.comments }}
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                 <div class="col-span-10">
                     <p class="text-white">Listes des Articles</p>
                     <div class="mt-4">
-                        <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0">
+                        <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0 w-full">
                             <option value="null">-- Choisissez une option --</option>
                             {% set currentCategory = null %}
                             {% for item in carte %}

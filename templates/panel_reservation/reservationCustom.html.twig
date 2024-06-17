@@ -7,8 +7,8 @@
 <div>
     {% include 'staffNavBar.html.twig' %}
     <div class="bg-blue-50 p-8 min-h-screen grid grid-cols-6">
-        <form class="bg-white rounded-md shadow-md p-8 col-start-2 col-span-4">
-            <div class="grid grid-cols-8 lg:gap-4 gap-6 mt-8 pb-8">
+        <form class="bg-white rounded-md shadow-md p-8 col-start-2 col-span-4" method="post" action="/panel-reservation">
+            <div class="grid grid-cols-8 lg:gap-4 md:gap-6 gap-4 mt-8 pb-8">
                 <label for="" class="item-label text-left text-3xl text-neutral-900 col-span-8">Nombres de couverts</label>
 
                 <input type="radio" name="couverts" class="couverts hidden" id="couvert-1" value="1" checked required>
@@ -125,7 +125,8 @@
             </div>
 
             <div class="md:1/3 w-2/5" id="confirmer-reservation-button">
-                <input type="submit" name="confirmer" value="Confirmer Réservation" class="md:p-5 p-2 md:px-5 px-0 md:w-full w-full rounded-lg lg:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
+                <input type="hidden" name="token" value="{{ csrf_token('creation-reservation') }}">
+                <input type="submit" name="confirmer-creation-reservation" value="Confirmer Réservation" class="md:p-5 p-2 md:px-5 px-0 md:w-full w-full rounded-lg lg:text-lg text-xs text-center bg-winter-hazel-600 text-neutral-50">
             </div>
         </form>
     </div>

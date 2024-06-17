@@ -9,7 +9,7 @@
     <div class="min-h-screen p-8 bg-blue-50">
         <form method="post" id="form-articles" action="/panel-reservation">
             <legend class="ml-8 mt-4 text-xl">Encaissement</legend>
-            <div class="m-8 p-8 shadow-md rounded-lg">
+            <div class="mx-8 mb-8 mt-2 p-8 shadow-md rounded-lg bg-white">
                 <div class=" grid grid-cols-5 gap-y-12">
                     <div class="col-span-3 row-span-2">
                         Nombre de couverts :
@@ -42,7 +42,7 @@
                 <div class="col-span-10">
                     <p class="text-white">Listes des Articles</p>
                     <div class="mt-4">
-                        <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0">
+                        <select id="liste-commandes-select" class="rounded-lg font-normal p-4 border-0 w-full">
                             <option value="null">-- Choisissez une option --</option>
                             {% set currentCategory = null %}
                             {% for item in carte %}

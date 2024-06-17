@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\NonReservationEncaisse;
+use App\Entity\Reservation;
 use App\Entity\ReservationEncaisse;
 use App\Repository\CalendarRepository;
 use App\Repository\CarteRepository;
@@ -10,6 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\NonReservationEncaisseRepository;
 use App\Repository\ReservationEncaisseRepository;
 use App\Repository\ReservationRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +54,22 @@ class PanelReservationController extends AbstractController
                 return $this->renderPanelReservation(true);
             }
             return $this->generateError(400);
+        } else if ($payload->get('confirmer-creation-reservation') != null &&
+            $this->isCsrfTokenValid('creation-reservation', $payload->get('token')))
+        {
+            if( $payload->get('couverts') >= 1 &&
+                $payload->get('prenom') != '' &&
+                $payload->get('nom') != '' &&
+                $payload->get('indicatif') != '' &&
+                $payload->get('numero') != '' &&
+                filter_var($payload->get('email'), FILTER_VALIDATE_EMAIL) &&
+                $payload->get('confirmer-creation-reservation') != ''
+            ){
+                $this->createReservation($em, $payload);
+                return $this->renderPanelReservation(false, true);
+            }
+
+            return $this->generateError(400);
         }
 
         $arr = [];
@@ -72,52 +90,11 @@ class PanelReservationController extends AbstractController
 
         if ($payload->get('checkout-validation') != null &&
             $this->isCsrfTokenValid('checkout-reservation', $payload->get('token'))){
-            if($this->reservationEncaisse->reservationIDAlreadyExist($payload->get('checkout-validation'))){
-                return $this->generateError(409);
-            }
-
-            $reservationSelected = $this->reservations->find($payload->get('checkout-validation'));
-            $reservationEncaisse = new ReservationEncaisse();
-            $reservationEncaisse->setIdReservation($payload->get('checkout-validation'))
-                ->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
-                ->setArticles($arr)
-                ->setNom($reservationSelected->getNom())
-                ->setPrenom($reservationSelected->getPrenom())
-                ->setCouverts($reservationSelected->getCouverts())
-                ->setDateReservation($reservationSelected->getDate())
-                ->setTelephone($reservationSelected->getTelephone())
-                ->setEmail($reservationSelected->getEmail())
-                ->setComments($reservationSelected->getComments())
-                ->setHorraire($reservationSelected->getHorraire())
-                ->setTotal($totalSum)
-                ->setMarge($totalMarge);
-            $em->persist($reservationEncaisse);
-            $em->remove($reservationSelected);
-            $em->flush();
-            return $this->render('panel_reservation/checkout_completed.html.twig', [
-                'articles' => $arr,
-                'total' => $totalSum,
-                'numeroReservation' => $payload->get('checkout-validation'),
-            ]);
+            return $this->handleEncaisserReservation($em, $payload, $arr, $totalSum, $totalMarge);
 
         } else if ($payload->get('checkout-validation') != null &&
             $this->isCsrfTokenValid('checkout-non-reservation', $payload->get('token'))){
-
-            $encaissement = new NonReservationEncaisse();
-            $encaissement->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
-                ->setMidi($payload->get('select-value') == 'matin')
-                ->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
-                ->setCouverts($payload->get('couverts'))
-                ->setArticle($arr)
-                ->setTotal($totalSum)
-                ->setMarge($totalMarge);
-            $em->persist($encaissement);
-            $em->flush();
-            return $this->render('panel_reservation/checkout_completed_non_reservation.html.twig', [
-                'articles' => $arr,
-                'total' => $totalSum,
-                'encaissement' => $encaissement,
-            ]);
+            return $this->handleEncaisserNonReservation($em, $payload, $arr, $totalSum, $totalMarge);
         }
 
         return $this->generateError(406);
@@ -207,10 +184,75 @@ class PanelReservationController extends AbstractController
     }
 
     #[Route('/creation-reservation', name: 'creation_reservation.post', methods: ['POST'])]
-    public function creationReservationPost(Request $request, CalendarRepository $calendar): Response {
+    public function creationReservationPost(CalendarRepository $calendar): Response {
         return $this->render('panel_reservation/reservationCustom.html.twig', [
             'fermer' => $calendar->findBy(['type' => 'fermer']),
             'ouvert' => $calendar->findBy(['type' => 'ouvert'])
         ]);
+    }
+
+    private function handleEncaisserReservation(EntityManagerInterface $em, $payload, $articles, $totalSum, $totalMarge): Response{
+        if($this->reservationEncaisse->reservationIDAlreadyExist($payload->get('checkout-validation'))){
+            return $this->generateError(409);
+        }
+
+        $reservationSelected = $this->reservations->find($payload->get('checkout-validation'));
+        $reservationEncaisse = new ReservationEncaisse();
+        $reservationEncaisse->setIdReservation($payload->get('checkout-validation'))
+            ->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
+            ->setArticles($articles)
+            ->setNom($reservationSelected->getNom())
+            ->setPrenom($reservationSelected->getPrenom())
+            ->setCouverts($reservationSelected->getCouverts())
+            ->setDateReservation($reservationSelected->getDate())
+            ->setTelephone($reservationSelected->getTelephone())
+            ->setEmail($reservationSelected->getEmail())
+            ->setComments($reservationSelected->getComments())
+            ->setHorraire($reservationSelected->getHorraire())
+            ->setTotal($totalSum)
+            ->setMarge($totalMarge);
+        $em->persist($reservationEncaisse);
+        $em->remove($reservationSelected);
+        $em->flush();
+        return $this->render('panel_reservation/checkout_completed.html.twig', [
+            'articles' => $articles,
+            'total' => $totalSum,
+            'numeroReservation' => $payload->get('checkout-validation'),
+        ]);
+    }
+
+    private function handleEncaisserNonReservation(EntityManagerInterface $em, $payload, $articles, $totalSum, $totalMarge): Response{
+        $encaissement = new NonReservationEncaisse();
+        $encaissement->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
+            ->setMidi($payload->get('select-value') == 'matin')
+            ->setDate(new \DateTime(null, new \DateTimeZone('Europe/Paris')))
+            ->setCouverts($payload->get('couverts'))
+            ->setArticle($articles)
+            ->setTotal($totalSum)
+            ->setMarge($totalMarge);
+        $em->persist($encaissement);
+        $em->flush();
+        return $this->render('panel_reservation/checkout_completed_non_reservation.html.twig', [
+            'articles' => $articles,
+            'total' => $totalSum,
+            'encaissement' => $encaissement,
+        ]);
+    }
+
+    private function createReservation(EntityManagerInterface $em, $payload){
+        $date = (new \DateTime($payload->get('date'))) ->setTime(substr($payload->get('heure'),4,2), substr($payload->get('heure'),7,2));
+        $newArticle = (new Reservation())
+            ->setNom($payload->get('nom'))
+            ->setPrenom($payload->get('prenom'))
+            ->setCivilite($payload->get('civilite'))
+            ->setEmail($payload->get('email'))
+            ->setTelephone('+' . $payload->get('indicatif') . ' ' . $payload->get('numero'))
+            ->setComments($payload->get('commentaires'))
+            ->setHorraire($date)
+            ->setEmplacement($payload->get('salle'))
+            ->setDate($date)
+            ->setCouverts($payload->get('couverts'));
+        $em->persist($newArticle);
+        $em->flush();
     }
 }
