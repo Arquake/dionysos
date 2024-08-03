@@ -38,11 +38,11 @@
                             {% set currentCategory = item.categorie %}
                     </div>
                     <div class="divide-y-2 divide-neutral-700 mt-8 lg:col-span-4 col-span-full lg:col-start-2 col-start-1">
-                        <div class="px-2">{{ currentCategory }}</div>
+                        <div class="px-2 text-xl">{{ currentCategory }}</div>
 
                         {% endif %}
                         <div class="p-2 grid grid-cols-8">
-                            <div class="col-span-7">{{ item.nom }}</div>
+                            <div class="col-span-7 text-base font-normal">{{ item.nom }}</div>
                             <div class="col-span-1">{{ item.prix }} €</div>
                         </div>
                         {% endfor %}
